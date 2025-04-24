@@ -82,6 +82,27 @@ class Admin
             add_settings_error('ocd_ai_messages', 'inputs_synced', 'All user inputs were rebuilt.', 'updated');
         }
 
+        if (
+            isset($_POST['generate_user_model']) &&
+            isset($_POST['ocd_ai_generate_model_nonce']) &&
+            wp_verify_nonce($_POST['ocd_ai_generate_model_nonce'], 'ocd_ai_generate_model_user')
+        ) {
+            $user_id = (int) $_POST['ai_user_id'];
+
+            try {
+                \Ocd\AiConsultant\UserDataBuilder::syncUserData($user_id);
+                $dataset = \Ocd\AiConsultant\JsonDatasetBuilder::buildUserDataset($user_id);
+                $model_id = \Ocd\AiConsultant\OpenAiService::trainModel($user_id, $dataset);
+
+                if ($model_id) {
+                    add_settings_error('ocd_ai_messages', 'model_generated', "Custom model created: $model_id", 'updated');
+                } else {
+                    add_settings_error('ocd_ai_messages', 'model_failed', 'Model training failed or returned empty ID.', 'error');
+                }
+            } catch (\Throwable $e) {
+                add_settings_error('ocd_ai_messages', 'model_exception', 'Error: ' . $e->getMessage(), 'error');
+            }
+        }
 
     }
 

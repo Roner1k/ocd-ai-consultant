@@ -22,6 +22,8 @@ $includes = [
     'includes/class-db-manager.php',
     'includes/class-excel-importer.php',
     'includes/class-user-data-builder.php',
+    'includes/class-json-dataset-builder.php',
+    'includes/class-openai-service.php',
     // Add more here as needed
 ];
 

@@ -88,4 +88,53 @@ class UserDataBuilder
         }
     }
 
+    /**
+     * Rebuilds AI input entries for a single user
+     */
+    //
+    public static function syncUserData($user_id, $email = null)
+    {
+        global $wpdb;
+
+        if (!$email) {
+            $user = get_userdata($user_id);
+            if (!$user) return;
+            $email = $user->user_email;
+        }
+
+        $forms = \GFAPI::get_forms();
+
+        foreach ($forms as $form) {
+            $entries = \GFAPI::get_entries($form['id'], [
+                'field_filters' => [
+                    ['key' => 'created_by', 'value' => $user_id]
+                ]
+            ]);
+
+            foreach ($entries as $entry) {
+                foreach ($form['fields'] as $field) {
+                    if (!isset($field->label)) continue;
+
+                    $field_id = $field->id;
+                    $question = $field->label;
+                    $answer = rgar($entry, (string) $field_id);
+
+                    if ($answer === null || $answer === '') {
+                        continue;
+                    }
+
+                    self::upsertInput([
+                        'user_id' => $user_id,
+                        'email' => $email,
+                        'question' => $question,
+                        'answer' => maybe_serialize($answer),
+                        'source_form' => $form['title'],
+                        'source_entry' => $entry['id'],
+                    ]);
+                }
+            }
+        }
+    }
+
+
 }

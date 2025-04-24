@@ -54,4 +54,16 @@ $settings = get_option('ocd_ai_settings', [
         <?php submit_button('Regenerate User Inputs', 'primary'); ?>
     </form>
 
+    <hr>
+
+    <h2>Generate Custom AI Model for User</h2>
+
+    <form method="post" onsubmit="return confirm('This will rebuild training data and create a new AI model for this user. Continue?');">
+        <?php wp_nonce_field('ocd_ai_generate_model_user', 'ocd_ai_generate_model_nonce'); ?>
+
+        <label for="ai_user_id">User ID:</label>
+        <input type="number" name="ai_user_id" id="ai_user_id" min="1" required />
+        <?php submit_button('Generate Custom Model', 'primary', 'generate_user_model'); ?>
+    </form>
+
 </div>
