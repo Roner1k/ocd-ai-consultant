@@ -54,4 +54,40 @@ $settings = get_option('ocd_ai_settings', [
         <?php submit_button('Regenerate User Inputs', 'primary'); ?>
     </form>
 
+<<<<<<< Updated upstream
+=======
+    <hr>
+
+    <h2>Generate Custom AI Model for User</h2>
+
+    <form method="post" onsubmit="return confirm('This will rebuild training data and create a new AI model for this user. Continue?');">
+        <?php wp_nonce_field('ocd_ai_generate_model_user', 'ocd_ai_generate_model_nonce'); ?>
+
+        <label for="ai_user_id">User ID:</label>
+        <input type="number" name="ai_user_id" id="ai_user_id" min="1" required />
+        <?php submit_button('Generate Custom Model', 'primary', 'generate_user_model'); ?>
+    </form>
+
+    <button id="ocd-ai-refresh" class="button button-secondary">
+        Refresh model statuses
+    </button>
+    <div id="ocd-ai-refresh-msg" style="display:none;margin-top:8px;"></div>
+
+    <?php
+    wp_enqueue_script(
+        'ocd-ai-refresh',
+        plugin_dir_url(dirname(__FILE__)) . 'assets/admin/js/ocd-ai-refresh.js',
+        [ 'jquery' ],
+        '1.0.0',
+        true
+    );
+
+    wp_localize_script( 'ocd-ai-refresh', 'ocdAiRefresh', [
+        'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+        'nonce'   => wp_create_nonce( 'ocd_ai_refresh_models' ),
+    ] );
+    ?>
+
+
+>>>>>>> Stashed changes
 </div>

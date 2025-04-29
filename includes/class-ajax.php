@@ -1,0 +1,149 @@
+<?php
+
+namespace Ocd\AiConsultant;
+
+defined('ABSPATH') || exit;
+
+class Ajax
+{
+    public static function register()
+    {
+        add_action('wp_ajax_ocd_ai_check_model_status', [self::class, 'checkModelStatus']);
+        add_action('wp_ajax_ocd_ai_chat_send_message', [self::class, 'sendMessage']);
+        add_action('wp_ajax_ocd_ai_chat_load_history', [self::class, 'loadChatHistory']);
+        add_action('wp_ajax_ocd_ai_update_language', [self::class, 'updateChatLanguage']);
+
+
+    }
+
+    /**
+     * Проверка статуса модели через AJAX
+     */
+    public static function checkModelStatus()
+    {
+        check_ajax_referer('ocd_ai_chat_nonce', 'nonce');
+
+        $model_id = sanitize_text_field($_POST['model_id'] ?? '');
+
+        if (!$model_id) {
+            wp_send_json_error(['message' => 'Model ID is missing']);
+        }
+
+        try {
+            $status = OpenAiService::getModelStatus($model_id);
+
+            global $wpdb;
+            $row = $wpdb->get_row($wpdb->prepare("
+                SELECT last_trained_at FROM {$wpdb->prefix}ocd_ai_user_models
+                WHERE model_id = %s
+            ", $model_id));
+
+            wp_send_json_success([
+                'status' => $status,
+                'last_trained' => $row->last_trained_at ?? '',
+            ]);
+
+        } catch (\Throwable $e) {
+            wp_send_json_error(['message' => $e->getMessage()]);
+        }
+    }
+
+    public static function sendMessage()
+    {
+        check_ajax_referer('ocd_ai_chat_nonce', 'nonce');
+
+        if (!is_user_logged_in()) {
+            wp_send_json_error(['message' => 'Not logged in']);
+        }
+
+        $current_user = wp_get_current_user();
+        $user_id = $current_user->ID;
+        $prompt = sanitize_textarea_field($_POST['prompt'] ?? '');
+
+        if (!$prompt) {
+            wp_send_json_error(['message' => 'Empty message']);
+        }
+
+        try {
+            $result = OpenAiService::sendMessage($user_id, $prompt);
+
+            if (isset($result['error'])) {
+                wp_send_json_error(['message' => $result['error']]);
+            }
+
+            wp_send_json_success([
+                'reply' => $result['response'],
+            ]);
+        } catch (\Throwable $e) {
+            wp_send_json_error(['message' => $e->getMessage()]);
+        }
+    }
+    public static function loadChatHistory()
+    {
+        check_ajax_referer('ocd_ai_chat_nonce', 'nonce');
+
+        if (!is_user_logged_in()) {
+            wp_send_json_error(['message' => 'Not logged in']);
+        }
+
+        $current_user = wp_get_current_user();
+        $user_id = $current_user->ID;
+
+        global $wpdb;
+        $table = $wpdb->prefix . 'ocd_ai_user_chat';
+
+        $rows = $wpdb->get_results($wpdb->prepare("
+        SELECT role, message, created_at
+        FROM $table
+        WHERE user_id = %d
+        ORDER BY created_at ASC
+        LIMIT 20
+    ", $user_id));
+
+        if (!$rows) {
+            wp_send_json_success(['history' => []]);
+        }
+
+        $history = [];
+
+        foreach ($rows as $row) {
+            $history[] = [
+                'role' => $row->role,
+                'message' => $row->message,
+                'created_at' => $row->created_at,
+            ];
+        }
+
+        wp_send_json_success(['history' => $history]);
+    }
+
+    public static function updateChatLanguage()
+    {
+        check_ajax_referer('ocd_ai_chat_nonce', 'nonce');
+
+        if (!is_user_logged_in()) {
+            wp_send_json_error(['message' => 'Not logged in']);
+        }
+
+        $current_user = wp_get_current_user();
+        $user_id = $current_user->ID;
+        $language = sanitize_text_field($_POST['language'] ?? '');
+
+        if (!$language) {
+            wp_send_json_error(['message' => 'Language is missing']);
+        }
+
+        global $wpdb;
+        $table = $wpdb->prefix . 'ocd_ai_user_models';
+
+        $wpdb->update(
+            $table,
+            ['chat_language' => $language, 'updated_at' => current_time('mysql')],
+            ['user_id' => $user_id]
+        );
+
+        wp_send_json_success(['message' => 'Language updated']);
+    }
+
+
+}

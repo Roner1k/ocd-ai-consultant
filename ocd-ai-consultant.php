@@ -22,6 +22,13 @@ $includes = [
     'includes/class-db-manager.php',
     'includes/class-excel-importer.php',
     'includes/class-user-data-builder.php',
+<<<<<<< Updated upstream
+=======
+    'includes/class-json-dataset-builder.php',
+    'includes/class-openai-service.php',
+    'includes/class-shortcodes.php',
+    'includes/class-ajax.php',
+>>>>>>> Stashed changes
     // Add more here as needed
 ];
 
@@ -33,6 +40,10 @@ foreach ($includes as $file) {
 }
 
 \Ocd\AiConsultant\Admin::init();
+\Ocd\AiConsultant\Shortcodes::register();
+\Ocd\AiConsultant\Ajax::register();
+
+
 
 // Plugin activation hook
 register_activation_hook(__FILE__, function () {
@@ -81,3 +92,5 @@ register_activation_hook(__FILE__, function () {
 
 
 });
+
+

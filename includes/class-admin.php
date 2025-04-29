@@ -12,6 +12,7 @@ class Admin
         add_action('admin_menu', [self::class, 'register_admin_pages']);
         add_action('admin_init', [self::class, 'handle_settings_form']);
         add_action('admin_init', [self::class, 'handle_import_form']);
+        add_action('wp_ajax_ocd_ai_refresh_models', [self::class, 'ajax_refresh_models']); // тут self::class будет правильный!
 
 
     }
@@ -129,4 +130,17 @@ class Admin
 
         include plugin_dir_path(__FILE__) . '/../templates/page-view.php';
     }
+    public static function ajax_refresh_models() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( [ 'message' => 'No permission' ], 403 );
+        }
+        check_ajax_referer( 'ocd_ai_refresh_models', 'nonce' );
+
+        $summary = OpenAiService::refreshPendingModels(); // вернём число моделей
+
+        wp_send_json_success( [ 'message' => "Checked {$summary['total']} jobs"
+            . " | ready: {$summary['ready']} | running: {$summary['running']} | failed: {$summary['failed']}" ] );
+    }
+
+
 }
