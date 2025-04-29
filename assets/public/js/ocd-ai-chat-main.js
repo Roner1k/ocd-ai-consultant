@@ -11,12 +11,6 @@ jQuery(function ($) {
     var modelStatus = $container.data('model-status');
     var modelId = $container.data('model-id');
 
-    // Загружаем историю при старте
-    OcdAiChatAjax.loadChatHistory(function (history) {
-        history.forEach(function (item) {
-            appendMessage(item.role, item.message);
-        });
-    });
 
     if (chatStatus === 'training') {
         $overlay.show();
@@ -49,6 +43,13 @@ jQuery(function ($) {
             appendMessage('assistant', response);
         });
     });
+    $textarea.on('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            $sendBtn.trigger('click');
+        }
+    });
+
 
     function appendMessage(role, text) {
         var messageClass = (role === 'user') ? 'user-message' : 'assistant-message';
@@ -56,7 +57,7 @@ jQuery(function ($) {
         $history.scrollTop($history.prop("scrollHeight"));
     }
 
-    
+
     var defaultGreetings = {
         en: "Hello! I'm your OCD AI Consultant. How can I assist you today?",
         fr: "Bonjour! Je suis votre consultant IA pour le TOC. Comment puis-je vous aider aujourd'hui?",
@@ -81,7 +82,12 @@ jQuery(function ($) {
 
 
     //lang
+    var chatLanguage = $container.data('chat-language') || 'en';
+
     var $languageSelect = $container.find('#ocd-ai-language-select');
+    if (chatLanguage && $languageSelect.length) {
+        $languageSelect.val(chatLanguage);
+    }
 
     $languageSelect.on('change', function () {
         var newLang = $(this).val();
@@ -93,5 +99,6 @@ jQuery(function ($) {
             }
         });
     });
+
 
 });

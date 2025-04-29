@@ -105,9 +105,7 @@ class UserDataBuilder
         }
     }
 
-<<<<<<< Updated upstream
-=======
-    /**
+     /**
      * Rebuilds AI input entries for a single user.
      * Can be used independently (e.g., after entry or subscription).
      */
@@ -237,5 +235,4 @@ class UserDataBuilder
 
         return (string)$answer;
     }
->>>>>>> Stashed changes
-}
+ }

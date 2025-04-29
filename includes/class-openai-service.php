@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 <?php
 
 namespace Ocd\AiConsultant;
@@ -267,4 +265,3 @@ class OpenAiService
 
 
 }
->>>>>>> Stashed changes
