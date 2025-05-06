@@ -9,7 +9,7 @@ class DbManager
     public static function createTables()
     {
         self::createModelTrainingLogTable();
-        self::createUserModelsTable();
+        self::createModelsTable();
         self::createUserAiInputTable();
         self::createUserChatTable();
     }
@@ -49,27 +49,21 @@ class DbManager
      * Includes training status, scheduled retraining, and selected chat language.
      * One row per user.
      */
-    private static function createUserModelsTable()
+    private static function createModelsTable()
     {
         global $wpdb;
-        $table = $wpdb->prefix . 'ocd_ai_user_models';
+        $table = $wpdb->prefix . 'ocd_ai_models';
         $charset = $wpdb->get_charset_collate();
 
         $sql = "
         CREATE TABLE IF NOT EXISTS `$table` (
-            id BIGINT UNSIGNED AUTO_INCREMENT,
-            user_id BIGINT UNSIGNED NOT NULL,
-            model_id VARCHAR(255),
-            status ENUM('pending','ready','error') DEFAULT 'pending',
+            id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            model_id VARCHAR(255) NOT NULL,
+            status VARCHAR(50) NOT NULL,
             last_trained_at DATETIME NULL,
             training_scheduled_at DATETIME NULL,
             error_log TEXT NULL,
-            chat_language VARCHAR(10) DEFAULT 'en',
-            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            PRIMARY KEY (id),
-            UNIQUE KEY (user_id),
-            INDEX (status),
-            INDEX (training_scheduled_at)
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         ) $charset;";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';

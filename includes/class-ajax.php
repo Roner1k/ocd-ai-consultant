@@ -11,14 +11,9 @@ class Ajax
         add_action('wp_ajax_ocd_ai_check_model_status', [self::class, 'checkModelStatus']);
         add_action('wp_ajax_ocd_ai_chat_send_message', [self::class, 'sendMessage']);
         add_action('wp_ajax_ocd_ai_chat_load_history', [self::class, 'loadChatHistory']);
-        add_action('wp_ajax_ocd_ai_update_language', [self::class, 'updateChatLanguage']);
-
-
+        add_action('wp_ajax_ocd_ai_refresh_models', [self::class, 'refreshModels']);
     }
 
-    /**
-     * Проверка статуса модели через AJAX
-     */
     public static function checkModelStatus()
     {
         check_ajax_referer('ocd_ai_chat_nonce', 'nonce');
@@ -33,10 +28,10 @@ class Ajax
             $status = OpenAiService::getModelStatus($model_id);
 
             global $wpdb;
-            $row = $wpdb->get_row($wpdb->prepare("
-                SELECT last_trained_at FROM {$wpdb->prefix}ocd_ai_user_models
-                WHERE model_id = %s
-            ", $model_id));
+            $row = $wpdb->get_row($wpdb->prepare(
+                "SELECT last_trained_at FROM {$wpdb->prefix}ocd_ai_models WHERE model_id = %s",
+                $model_id
+            ));
 
             wp_send_json_success([
                 'status' => $status,
@@ -78,6 +73,7 @@ class Ajax
             wp_send_json_error(['message' => $e->getMessage()]);
         }
     }
+
     public static function loadChatHistory()
     {
         check_ajax_referer('ocd_ai_chat_nonce', 'nonce');
@@ -92,20 +88,13 @@ class Ajax
         global $wpdb;
         $table = $wpdb->prefix . 'ocd_ai_user_chat';
 
-        $rows = $wpdb->get_results($wpdb->prepare("
-        SELECT role, message, created_at
-        FROM $table
-        WHERE user_id = %d
-        ORDER BY created_at ASC
-        LIMIT 20
-    ", $user_id));
+        $rows = $wpdb->get_results($wpdb->prepare("SELECT role, message, created_at FROM $table WHERE user_id = %d ORDER BY created_at ASC LIMIT 20", $user_id));
 
         if (!$rows) {
             wp_send_json_success(['history' => []]);
         }
 
         $history = [];
-
         foreach ($rows as $row) {
             $history[] = [
                 'role' => $row->role,
@@ -117,33 +106,19 @@ class Ajax
         wp_send_json_success(['history' => $history]);
     }
 
-    public static function updateChatLanguage()
+    public static function refreshModels()
     {
         check_ajax_referer('ocd_ai_chat_nonce', 'nonce');
 
-        if (!is_user_logged_in()) {
-            wp_send_json_error(['message' => 'Not logged in']);
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'Access denied']);
         }
 
-        $current_user = wp_get_current_user();
-        $user_id = $current_user->ID;
-        $language = sanitize_text_field($_POST['language'] ?? '');
-
-        if (!$language) {
-            wp_send_json_error(['message' => 'Language is missing']);
+        try {
+            OpenAiService::refreshPendingModels();
+            wp_send_json_success(['message' => 'Model statuses refreshed']);
+        } catch (\Throwable $e) {
+            wp_send_json_error(['message' => $e->getMessage()]);
         }
-
-        global $wpdb;
-        $table = $wpdb->prefix . 'ocd_ai_user_models';
-
-        $wpdb->update(
-            $table,
-            ['chat_language' => $language, 'updated_at' => current_time('mysql')],
-            ['user_id' => $user_id]
-        );
-
-        wp_send_json_success(['message' => 'Language updated']);
     }
-
-
 }

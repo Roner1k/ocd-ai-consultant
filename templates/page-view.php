@@ -5,7 +5,7 @@ global $wpdb;
 $tables = [
     'ocd_ai_knowledge_base' => 'KB Import Data',
     'ocd_ai_user_ai_input' => 'GF Data',
-    'OCD_AI_USER_MODELS' => 'Model Statuses',
+    'OCD_AI_MODELS' => 'Model Statuses',
 ];
 
 $selected = sanitize_text_field($_GET['table'] ?? 'ocd_ai_knowledge_base');

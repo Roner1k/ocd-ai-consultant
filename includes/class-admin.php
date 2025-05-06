@@ -52,38 +52,51 @@ class Admin
 
     public static function handle_settings_form()
     {
-        // Save settings
         if (
             isset($_POST['ocd_ai_settings_nonce']) &&
             wp_verify_nonce($_POST['ocd_ai_settings_nonce'], 'ocd_ai_save_settings')
         ) {
             $settings = get_option('ocd_ai_settings', []);
             $settings['openai_api_key'] = sanitize_text_field($_POST['openai_api_key'] ?? '');
+            $settings['openai_system_content'] = sanitize_textarea_field($_POST['openai_system_content'] ?? '');
             update_option('ocd_ai_settings', $settings);
 
             add_settings_error('ocd_ai_messages', 'ocd_ai_saved', 'Settings saved.', 'updated');
         }
 
-        // Trigger model regeneration
         if (
             isset($_POST['ocd_ai_regenerate_nonce']) &&
             wp_verify_nonce($_POST['ocd_ai_regenerate_nonce'], 'ocd_ai_regenerate_models')
         ) {
-            $settings = get_option('ocd_ai_settings', []);
-            $settings['last_model_generation_log'] = current_time('mysql');
-            update_option('ocd_ai_settings', $settings);
+            $dataset = UserDataBuilder::buildKbDataset();
+            $jsonl = "";
+            foreach ($dataset as $item) {
+                $jsonl .= json_encode($item, JSON_UNESCAPED_UNICODE) . "\n";
+            }
+            error_log("[AI-Debug] JSONL preview:\n" . $jsonl);
 
-            add_settings_error('ocd_ai_messages', 'ocd_ai_regenerated', 'Model regeneration started (simulation).', 'updated');
+            add_settings_error('ocd_ai_messages', 'preview_only', 'JSONL dataset generated. Check debug.log.', 'updated');
+//            return;
+
+            $job_id = OpenAiService::trainModel($dataset);
+
+            if ($job_id) {
+                $settings = get_option('ocd_ai_settings', []);
+                $settings['last_model_generation_log'] = "Training started: $job_id | " . current_time('mysql');
+                update_option('ocd_ai_settings', $settings);
+                add_settings_error('ocd_ai_messages', 'regenerated', 'Model regeneration started.', 'updated');
+            } else {
+                add_settings_error('ocd_ai_messages', 'regeneration_failed', 'Failed to start model training.', 'error');
+            }
         }
 
-        if (isset($_POST['ocd_ai_regenerate_inputs_nonce']) &&
-            wp_verify_nonce($_POST['ocd_ai_regenerate_inputs_nonce'], 'ocd_ai_regenerate_inputs')) {
-
-            \Ocd\AiConsultant\UserDataBuilder::rebuildAll();
+        if (
+            isset($_POST['ocd_ai_regenerate_inputs_nonce']) &&
+            wp_verify_nonce($_POST['ocd_ai_regenerate_inputs_nonce'], 'ocd_ai_regenerate_inputs')
+        ) {
+            UserDataBuilder::rebuildAll();
             add_settings_error('ocd_ai_messages', 'inputs_synced', 'All user inputs were rebuilt.', 'updated');
         }
-
-
     }
 
 
@@ -130,17 +143,32 @@ class Admin
 
         include plugin_dir_path(__FILE__) . '/../templates/page-view.php';
     }
-    public static function ajax_refresh_models() {
-        if ( ! current_user_can( 'manage_options' ) ) {
-            wp_send_json_error( [ 'message' => 'No permission' ], 403 );
+
+    public static function ajax_refresh_models()
+    {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'No permission'], 403);
         }
-        check_ajax_referer( 'ocd_ai_refresh_models', 'nonce' );
+        check_ajax_referer('ocd_ai_refresh_models', 'nonce');
 
-        $summary = OpenAiService::refreshPendingModels(); // вернём число моделей
+        $summary = OpenAiService::refreshPendingModels(['training', 'failed']);
 
-        wp_send_json_success( [ 'message' => "Checked {$summary['total']} jobs"
-            . " | ready: {$summary['ready']} | running: {$summary['running']} | failed: {$summary['failed']}" ] );
+        if (!is_array($summary)) {
+            OpenAiService::aiLog('Model refresh returned unexpected result', $summary);
+            wp_send_json_error(['message' => 'Model refresh failed or returned no data']);
+            return;
+        }
+
+        OpenAiService::aiLog('Model refresh summary', $summary);
+
+        wp_send_json_success([
+            'message' => "Checked {$summary['total']} jobs"
+                . " | ready: {$summary['ready']}"
+                . " | running: {$summary['running']}"
+                . " | failed: {$summary['failed']}"
+        ]);
     }
+
 
 
 }

@@ -76,6 +76,7 @@ register_activation_hook(__FILE__, function () {
     // Default plugin options (created once)
     $default_settings = [
         'openai_api_key' => '',
+        'openai_system_content' => '',
         'last_import_log' => '',
         'last_model_generation_log' => '',
     ];

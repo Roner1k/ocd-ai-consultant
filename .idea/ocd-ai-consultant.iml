@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/includes" isTestSource="false" packagePrefix="Ocd\AiConsultant\" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/guzzle" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/psr7" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/maennchen/zipstream-php" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/markbaker/complex" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/markbaker/matrix" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/nyholm/psr7" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/openai-php/client" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/php-http/discovery" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/php-http/multipart-stream-builder" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/phpoffice/phpspreadsheet" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/container" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-client" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-factory" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-message" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/simple-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/ralouphie/getallheaders" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/deprecation-contracts" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/http-client" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/http-client-contracts" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/service-contracts" />
+    <content url="file://$MODULE_DIR$/../../..">
+      <sourceFolder url="file://$MODULE_DIR$/../duplicator-pro" isTestSource="false" packagePrefix="Duplicator" />
+      <sourceFolder url="file://$MODULE_DIR$/../duplicator-pro/aws" isTestSource="false" packagePrefix="DuplicatorPro" />
+      <sourceFolder url="file://$MODULE_DIR$/../duplicator-pro/lib/onedrive/src" isTestSource="false" packagePrefix="DuplicatorPro" />
+      <sourceFolder url="file://$MODULE_DIR$/../duplicator-pro/lib/phpseclib" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../duplicator-pro/src" isTestSource="false" packagePrefix="Duplicator" />
+      <sourceFolder url="file://$MODULE_DIR$/../gravityview/trustedlogin/psr/log" isTestSource="false" packagePrefix="GravityView" />
+      <sourceFolder url="file://$MODULE_DIR$/../limit-login-attempts-reloaded" isTestSource="false" packagePrefix="LLAR" />
+      <sourceFolder url="file://$MODULE_DIR$/../paid-memberships-pro/includes/lib/Braintree/lib" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../paid-memberships-pro/includes/lib/Stripe/lib" isTestSource="false" packagePrefix="Stripe" />
+      <sourceFolder url="file://$MODULE_DIR$/../perfmatters/inc/classes" isTestSource="false" packagePrefix="Perfmatters" />
+      <sourceFolder url="file://$MODULE_DIR$/../restrict-content-pro/common/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../restrict-content-pro/core/includes" isTestSource="false" packagePrefix="RCP" />
+      <sourceFolder url="file://$MODULE_DIR$/../restrict-content-pro/core/includes/libraries/stripe/lib" isTestSource="false" packagePrefix="Stripe" />
+      <sourceFolder url="file://$MODULE_DIR$/../restrict-content-pro/pro/includes/libraries/braintree/lib" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../updraftplus/includes" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../wp-crontrol/src" isTestSource="false" packagePrefix="Crontrol" />
+      <sourceFolder url="file://$MODULE_DIR$/../wp-data-access" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../wp-rocket/inc" isTestSource="false" packagePrefix="WP_Rocket" />
+      <sourceFolder url="file://$MODULE_DIR$/../wp-rocket/inc/Addon" isTestSource="false" packagePrefix="WPMedia" />
+      <sourceFolder url="file://$MODULE_DIR$/../wp-rocket/inc/deprecated" isTestSource="false" packagePrefix="WP_Rocket" />
+      <sourceFolder url="file://$MODULE_DIR$/../wp-rocket/inc/deprecated/Engine" isTestSource="false" packagePrefix="WP_Rocket" />
+      <sourceFolder url="file://$MODULE_DIR$/../../themes/astra/inc/lib/utm-analytics" isTestSource="false" packagePrefix="BSF_UTM_Analytics" />
+      <sourceFolder url="file://$MODULE_DIR$/../../updraft/plugins-old/updraftplus/includes" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../updraft/plugins-old/wp-data-access" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../wp-includes" isTestSource="false" packagePrefix="PHPMailer" />
+      <sourceFolder url="file://$MODULE_DIR$/../../../wp-includes/SimplePie/src" isTestSource="false" packagePrefix="SimplePie" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

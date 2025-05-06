@@ -3,16 +3,11 @@ defined('ABSPATH') || exit;
 
 $current_user = wp_get_current_user();
 $user_name = $current_user->display_name ?: $current_user->user_login;
-$preferred_language = get_user_meta($current_user->ID, 'ocd_ai_language', true) ?: 'English'; // если заранее не сохранили язык
 ?>
 
 <div id="ocd-ai-chat-container"
      class="ocd-ai-chat-wrapper"
-     data-chat-status="<?php echo esc_attr($chat_status); ?>"
-     data-model-status="<?php echo esc_attr($model_info['status']); ?>"
-     data-model-id="<?php echo esc_attr($model_info['model_id']); ?>"
-     data-last-trained="<?php echo esc_attr($model_info['last_trained_at']); ?>"
-     data-chat-language="<?php echo esc_attr($model_info['chat_language']); ?>">
+     data-model-id="<?php echo esc_attr($model_info['model_id']); ?>">
 
     <!-- Заголовок -->
     <div class="ocd-ai-chat-header">
@@ -40,14 +35,11 @@ $preferred_language = get_user_meta($current_user->ID, 'ocd_ai_language', true) 
         <p>Model Info:
             <strong id="ocd-ai-model-status">
                 <?php
-                echo 'Status: ' . esc_html($model_info['status']) .
-                    ' | Model ID: ' . esc_html($model_info['model_id']) .
-                    ' | Last trained: ' . esc_html($model_info['last_trained_at']);
+                echo 'Status: ready | Model ID: ' . esc_html($model_info['model_id']) ;
                 ?>
             </strong>
         </p>
     </div>
-
 
     <!-- История сообщений -->
     <div id="ocd-ai-chat-history" class="ocd-ai-chat-history">
@@ -64,6 +56,4 @@ $preferred_language = get_user_meta($current_user->ID, 'ocd_ai_language', true) 
     <div id="ocd-ai-chat-overlay" class="ocd-ai-chat-overlay" style="display: none;">
         <div class="ocd-ai-chat-overlay-message"></div>
     </div>
-
 </div>
-

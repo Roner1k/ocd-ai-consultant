@@ -2,5 +2,10 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../../_ocd-ai-consultant" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../msa-comparison-tool" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../ocd-ai-consultant — копия" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../tsphistoryprice/tsphistoryprice" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../../themes/theme-merge" vcs="Git" />
   </component>
 </project>

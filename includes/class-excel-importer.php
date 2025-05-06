@@ -17,7 +17,7 @@ class ExcelImporter
 
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $base_name = pathinfo($file['name'], PATHINFO_FILENAME);
-        $timestamp = current_time('Ymd_His'); // WP timezone
+        $timestamp = current_time('Ymd_His');
         $filename = sanitize_file_name($base_name . '_' . $timestamp . '.' . $extension);
         $target_path = trailingslashit($target_dir) . $filename;
 
@@ -27,44 +27,51 @@ class ExcelImporter
 
         try {
             $spreadsheet = IOFactory::load($target_path);
-            $sheet = $spreadsheet->getActiveSheet();
-            $firstRow = $sheet->getRowIterator()->current();
-            $columnCount = iterator_count($firstRow->getCellIterator());
-
-            // Recreate the knowledge base table based on column count
-            self::recreateTable($columnCount);
+            $allSheets = $spreadsheet->getAllSheets();
 
             global $wpdb;
             $table = $wpdb->prefix . 'ocd_ai_knowledge_base';
-
             $inserted = 0;
-            foreach ($sheet->getRowIterator() as $row) {
-                $cells = [];
-                foreach ($row->getCellIterator() as $cell) {
-                    $cells[] = $cell->getValue();
-                }
+            $columnCount = 0;
 
-                if (!empty(array_filter($cells))) {
-                    $data = [];
-                    for ($i = 0; $i < min(count($cells), $columnCount); $i++) {
-                        $data["col" . ($i + 1)] = $cells[$i];
+            // определим кол-во колонок по первому листу
+            if (isset($allSheets[0])) {
+                $firstRow = $allSheets[0]->getRowIterator()->current();
+                $columnCount = iterator_count($firstRow->getCellIterator());
+                self::recreateTable($columnCount);
+            }
+
+            foreach ($allSheets as $sheet) {
+                foreach ($sheet->getRowIterator() as $row) {
+                    $cells = [];
+
+                    foreach ($row->getCellIterator() as $cell) {
+                        $cells[] = $cell->getValue();
                     }
-                    $wpdb->insert($table, $data);
-                    $inserted++;
+
+                    if (!empty(array_filter($cells))) {
+                        $data = [];
+                        for ($i = 0; $i < min(count($cells), $columnCount); $i++) {
+                            $data["col" . ($i + 1)] = $cells[$i];
+                        }
+                        $wpdb->insert($table, $data);
+                        $inserted++;
+                    }
                 }
             }
 
             $settings = get_option('ocd_ai_settings', []);
             $settings['last_import_log'] = sprintf(
-                'File: %s | Columns: %d | Imported at: %s | Rows: %d | Status: success',
+                'File: %s | Sheets: %d | Columns: %d | Imported at: %s | Rows: %d | Status: success',
                 $filename,
+                count($allSheets),
                 $columnCount,
                 current_time('mysql'),
                 $inserted
             );
             update_option('ocd_ai_settings', $settings);
 
-            return ['success' => true, 'message' => 'Imported ' . $inserted . ' rows.'];
+            return ['success' => true, 'message' => 'Imported ' . $inserted . ' rows from ' . count($allSheets) . ' sheet(s).'];
         } catch (\Throwable $e) {
             $settings = get_option('ocd_ai_settings', []);
             $settings['last_import_log'] = sprintf(
@@ -78,6 +85,7 @@ class ExcelImporter
             return ['success' => false, 'message' => 'Import failed: ' . $e->getMessage()];
         }
     }
+
 
     private static function recreateTable(int $columnCount): void
     {

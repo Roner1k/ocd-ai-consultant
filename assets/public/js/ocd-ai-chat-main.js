@@ -53,7 +53,9 @@ jQuery(function ($) {
 
     function appendMessage(role, text) {
         var messageClass = (role === 'user') ? 'user-message' : 'assistant-message';
-        $history.append('<div class="' + messageClass + '">' + OcdAiChatUtils.escapeHtml(text) + '</div>');
+        var iconHtml = '<div class="ocd-message-icon"></div>';
+        var messageHtml = '<div class="' + messageClass + '">' + iconHtml + '<div>' + OcdAiChatUtils.escapeHtml(text) + '</div></div>';
+        $history.append(messageHtml);
         $history.scrollTop($history.prop("scrollHeight"));
     }
 

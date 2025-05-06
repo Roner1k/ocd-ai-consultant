@@ -5,7 +5,30 @@ namespace Ocd\AiConsultant;
 defined('ABSPATH') || exit;
 
 class UserDataBuilder
+
+
 {
+
+    public static function buildKbDataset(): array {
+        global $wpdb;
+        $rows = $wpdb->get_results("SELECT col1 AS question, col2 AS answer FROM {$wpdb->prefix}ocd_ai_knowledge_base");
+
+        $dataset = [];
+        foreach ($rows as $row) {
+            if (!$row->question || !$row->answer) continue;
+
+            $dataset[] = [
+                'messages' => [
+                    ['role' => 'user', 'content' => $row->question],
+                    ['role' => 'assistant', 'content' => $row->answer],
+                ]
+            ];
+        }
+
+        return $dataset;
+    }
+
+
     /**
      * Rebuilds the AI input table for all users.
      */
@@ -109,49 +132,7 @@ class UserDataBuilder
      * Rebuilds AI input entries for a single user.
      * Can be used independently (e.g., after entry or subscription).
      */
-//    public static function syncUserData($user_id, $email = null)
-//    {
-//        global $wpdb;
-//
-//        if (!$email) {
-//            $user = get_userdata($user_id);
-//            if (!$user) return;
-//            $email = $user->user_email;
-//        }
-//
-//        $forms = \GFAPI::get_forms();
-//
-//        foreach ($forms as $form) {
-//            $entries = \GFAPI::get_entries($form['id'], [
-//                'field_filters' => [
-//                    ['key' => 'created_by', 'value' => $user_id]
-//                ]
-//            ]);
-//
-//            foreach ($entries as $entry) {
-//                foreach ($form['fields'] as $field) {
-//                    if (!isset($field->label)) continue;
-//
-//                    $field_id = $field->id;
-//                    $question = $field->label;
-//                    $answer = rgar($entry, (string) $field_id);
-//
-//                    if ($answer === null || $answer === '') {
-//                        continue;
-//                    }
-//
-//                    self::upsertInput([
-//                        'user_id'       => $user_id,
-//                        'email'         => $email,
-//                        'question'      => $question,
-//                        'answer'        => self::normalizeAnswer($answer),
-//                        'source_form'   => $form['title'],
-//                        'source_entry'  => $entry['id'],
-//                    ]);
-//                }
-//            }
-//        }
-//    }
+
 
     public static function syncUserData($user_id, $email = null)
     {
