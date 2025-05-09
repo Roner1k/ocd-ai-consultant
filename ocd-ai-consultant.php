@@ -27,6 +27,8 @@ $includes = [
     'includes/class-openai-service.php',
     'includes/class-shortcodes.php',
     'includes/class-ajax.php',
+    'includes/class-cron.php',
+    'includes/class-ocd-log.php',
 
     // Add more here as needed
 ];
@@ -41,7 +43,13 @@ foreach ($includes as $file) {
 \Ocd\AiConsultant\Admin::init();
 \Ocd\AiConsultant\Shortcodes::register();
 \Ocd\AiConsultant\Ajax::register();
+\Ocd\AiConsultant\Cron::register();
 
+// Plugin deactivation hook
+register_deactivation_hook(__FILE__, function () {
+    // Clear cron job for model training check
+    wp_clear_scheduled_hook('ocd_ai_check_training_models');
+});
 
 
 // Plugin activation hook
@@ -77,8 +85,10 @@ register_activation_hook(__FILE__, function () {
     $default_settings = [
         'openai_api_key' => '',
         'openai_system_content' => '',
+        'openai_ft_system_content' => '',
         'last_import_log' => '',
         'last_model_generation_log' => '',
+        'last_model_refresh_log'
     ];
 
 // Plugin options stored in 'ocd_ai_settings':
@@ -91,6 +101,12 @@ register_activation_hook(__FILE__, function () {
     }
 
 
+// Schedule cron if training models exist
+    if (class_exists('\Ocd\AiConsultant\Cron')) {
+        \Ocd\AiConsultant\Cron::scheduleIfTrainingExists();
+    }
+
 });
+
 
 

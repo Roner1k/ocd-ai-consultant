@@ -3,12 +3,13 @@ global $wpdb;
 
 // List of selectable tables
 $tables = [
-    'ocd_ai_knowledge_base' => 'KB Import Data',
-    'ocd_ai_user_ai_input' => 'GF Data',
-    'OCD_AI_MODELS' => 'Model Statuses',
+    'ocd_ai_models' => 'Model Statuses',
+    'ocd_ai_knowledge_base' => 'Import Data',
+    'ocd_ai_user_ai_input' => 'Collected GF Data',
+    'ocd_ai_model_training_log' => 'Generate model Log',
 ];
 
-$selected = sanitize_text_field($_GET['table'] ?? 'ocd_ai_knowledge_base');
+$selected = sanitize_text_field($_GET['table'] ?? 'ocd_ai_models');
 $table_name = $wpdb->prefix . $selected;
 
 // Pagination

@@ -42,27 +42,40 @@ class Shortcodes
             return ob_get_clean();
         }
 
-        $has_active_subscription = true; // TODO: заменить на реальную проверку
+        $has_active_subscription = true;
 
         $chat_status = 'ready';
         $model_info = [
             'status' => 'ready',
             'model_id' => '',
-            'last_trained_at' => '',
+            'model_type' => '',
         ];
 
         if (!$has_active_subscription) {
             $chat_status = 'no_subscription';
         } else {
-            $model_id = OpenAiService::getActiveModelId();
-            if (!$model_id) {
-                $chat_status = 'error';
+            global $wpdb;
+            $table = "{$wpdb->prefix}ocd_ai_models";
+
+            // Пытаемся найти активную модель
+            $model = $wpdb->get_row("SELECT * FROM $table WHERE model_type = 'active' AND status = 'ready' ORDER BY created_at DESC LIMIT 1");
+
+            // Если активной нет — берём самую свежую из ready
+            if (!$model) {
+                $model = $wpdb->get_row("SELECT * FROM $table WHERE status = 'ready' ORDER BY created_at DESC LIMIT 1");
+            }
+
+            // Если нашли модель — отображаем
+            if ($model) {
+                $model_info['model_id'] = $model->model_id;
+                $model_info['model_type'] = $model->model_type;
             } else {
-                $model_info['model_id'] = $model_id;
+                $chat_status = 'error';
             }
         }
 
         include plugin_dir_path(__FILE__) . '/../templates/shortcode-chat.php';
         return ob_get_clean();
     }
+
 }

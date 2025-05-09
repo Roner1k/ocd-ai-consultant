@@ -18,24 +18,22 @@ class DbManager
     /** Logs every fine-tuning request for a user
      *
      * */
-    private static function createModelTrainingLogTable()
-    {
+    public static function createModelTrainingLogTable(): void {
         global $wpdb;
+
         $table = $wpdb->prefix . 'ocd_ai_model_training_log';
         $charset = $wpdb->get_charset_collate();
 
         $sql = "
-    CREATE TABLE IF NOT EXISTS `$table` (
+    CREATE TABLE IF NOT EXISTS $table (
         id BIGINT UNSIGNED AUTO_INCREMENT,
-        user_id BIGINT UNSIGNED NOT NULL,
-        model_id VARCHAR(255) NULL,
-        status VARCHAR(20) NOT NULL,
-        trigger_source VARCHAR(20) NOT NULL,
-        message TEXT,
+        job_id VARCHAR(255) NOT NULL,
+        status VARCHAR(50) NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        import_log TEXT NULL,
+        training_preview LONGTEXT NULL,
         PRIMARY KEY (id),
-        INDEX (user_id),
-        INDEX (created_at)
+        UNIQUE KEY job_id (job_id(191))
     ) $charset;
     ";
 
@@ -44,11 +42,14 @@ class DbManager
     }
 
 
+
+
     /**
      * Stores the current state of each user's custom AI model.
      * Includes training status, scheduled retraining, and selected chat language.
      * One row per user.
      */
+
     private static function createModelsTable()
     {
         global $wpdb;
@@ -56,19 +57,23 @@ class DbManager
         $charset = $wpdb->get_charset_collate();
 
         $sql = "
-        CREATE TABLE IF NOT EXISTS `$table` (
-            id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            model_id VARCHAR(255) NOT NULL,
-            status VARCHAR(50) NOT NULL,
-            last_trained_at DATETIME NULL,
-            training_scheduled_at DATETIME NULL,
-            error_log TEXT NULL,
-            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        ) $charset;";
+    CREATE TABLE IF NOT EXISTS `$table` (
+        id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        job_id VARCHAR(255) NULL,                
+        model_id VARCHAR(255) NOT NULL,          
+        import_log TEXT NULL,                 
+        status VARCHAR(50) NOT NULL,
+        model_type ENUM('active','backup','archived') DEFAULT 'archived',
+        error_log TEXT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) $charset;";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
         dbDelta($sql);
     }
+
+
 
 
     /** Contains the full message history for the user's AI chat.

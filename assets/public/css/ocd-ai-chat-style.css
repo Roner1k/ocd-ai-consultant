@@ -102,7 +102,7 @@
     max-width: 75%;
     text-align: right;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
 }
 
@@ -115,7 +115,7 @@
     max-width: 100%;
     text-align: left;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
 }
 

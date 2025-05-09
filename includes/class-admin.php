@@ -1,6 +1,8 @@
 <?php
 
 namespace Ocd\AiConsultant;
+use Ocd\AiConsultant\OcdLog;
+
 
 defined('ABSPATH') || exit;
 
@@ -58,11 +60,14 @@ class Admin
         ) {
             $settings = get_option('ocd_ai_settings', []);
             $settings['openai_api_key'] = sanitize_text_field($_POST['openai_api_key'] ?? '');
-            $settings['openai_system_content'] = sanitize_textarea_field($_POST['openai_system_content'] ?? '');
+            $settings['openai_system_content'] = sanitize_textarea_field(wp_unslash($_POST['openai_system_content'] ?? ''));
+            $settings['openai_ft_system_content'] = sanitize_textarea_field(wp_unslash($_POST['openai_ft_system_content'] ?? ''));
+
             update_option('ocd_ai_settings', $settings);
 
             add_settings_error('ocd_ai_messages', 'ocd_ai_saved', 'Settings saved.', 'updated');
         }
+
 
         if (
             isset($_POST['ocd_ai_regenerate_nonce']) &&
@@ -97,6 +102,29 @@ class Admin
             UserDataBuilder::rebuildAll();
             add_settings_error('ocd_ai_messages', 'inputs_synced', 'All user inputs were rebuilt.', 'updated');
         }
+
+        if (
+            isset($_POST['list_models']) &&
+            isset($_POST['ocd_ai_list_models_nonce']) &&
+            wp_verify_nonce($_POST['ocd_ai_list_models_nonce'], 'ocd_ai_list_models_nonce')
+        ) {
+            try {
+                $models = OpenAiService::listAvailableModels();
+                OcdLog::aiLog("Available models", $models);
+                add_settings_error('ocd_ai_messages', 'models_listed', 'Available models logged.', 'updated');
+            } catch (\Throwable $e) {
+                add_settings_error('ocd_ai_messages', 'models_failed', 'Failed to list models: ' . $e->getMessage(), 'error');
+            }
+        }
+
+        if (isset($_POST['ocd_ai_delete_orphaned_models_nonce']) &&
+            wp_verify_nonce($_POST['ocd_ai_delete_orphaned_models_nonce'], 'ocd_ai_delete_orphaned_models')) {
+
+            OpenAiService::deleteOrphanedFtModels();
+            add_settings_error('ocd_ai_messages', 'models_cleaned', 'Orphaned models deleted.', 'updated');
+        }
+
+
     }
 
 
@@ -154,12 +182,12 @@ class Admin
         $summary = OpenAiService::refreshPendingModels(['training', 'failed']);
 
         if (!is_array($summary)) {
-            OpenAiService::aiLog('Model refresh returned unexpected result', $summary);
+            OcdLog::aiLog('Model refresh returned unexpected result', $summary);
             wp_send_json_error(['message' => 'Model refresh failed or returned no data']);
             return;
         }
 
-        OpenAiService::aiLog('Model refresh summary', $summary);
+        OcdLog::aiLog('Model refresh summary', $summary);
 
         wp_send_json_success([
             'message' => "Checked {$summary['total']} jobs"

@@ -9,20 +9,28 @@ class UserDataBuilder
 
 {
 
-    public static function buildKbDataset(): array {
+    public static function buildKbDataset(): array
+    {
         global $wpdb;
         $rows = $wpdb->get_results("SELECT col1 AS question, col2 AS answer FROM {$wpdb->prefix}ocd_ai_knowledge_base");
 
         $dataset = [];
+        $settings = get_option('ocd_ai_settings', []);
+        $system_prompt = trim($settings['openai_ft_system_content'] ?? '');
+
         foreach ($rows as $row) {
             if (!$row->question || !$row->answer) continue;
 
-            $dataset[] = [
-                'messages' => [
-                    ['role' => 'user', 'content' => $row->question],
-                    ['role' => 'assistant', 'content' => $row->answer],
-                ]
-            ];
+            $messages = [];
+
+            if ($system_prompt) {
+                $messages[] = ['role' => 'system', 'content' => $system_prompt];
+            }
+
+            $messages[] = ['role' => 'user', 'content' => $row->question];
+            $messages[] = ['role' => 'assistant', 'content' => $row->answer];
+
+            $dataset[] = ['messages' => $messages];
         }
 
         return $dataset;
@@ -128,7 +136,7 @@ class UserDataBuilder
         }
     }
 
-     /**
+    /**
      * Rebuilds AI input entries for a single user.
      * Can be used independently (e.g., after entry or subscription).
      */
@@ -216,4 +224,4 @@ class UserDataBuilder
 
         return (string)$answer;
     }
- }
+}

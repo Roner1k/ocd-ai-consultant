@@ -3,6 +3,22 @@ defined('ABSPATH') || exit;
 
 $current_user = wp_get_current_user();
 $user_name = $current_user->display_name ?: $current_user->user_login;
+
+$status_text = 'Unknown';
+switch ($model_info['status']) {
+    case 'active':
+        $status_text = 'Active model';
+        break;
+    case 'backup':
+        $status_text = 'Using backup model';
+        break;
+    case 'training':
+        $status_text = 'Model is training...';
+        break;
+    case 'error':
+        $status_text = 'Error: no model available';
+        break;
+}
 ?>
 
 <div id="ocd-ai-chat-container"
@@ -11,8 +27,8 @@ $user_name = $current_user->display_name ?: $current_user->user_login;
 
     <!-- Заголовок -->
     <div class="ocd-ai-chat-header">
-        <div class="ocd-ai-chat-title">
-            OCD AI CONSULTANT
+        <div class="ocd-ai-chat-title"><strong>OCD AI CONSULTANT</strong>
+
         </div>
         <div class="ocd-ai-chat-language">
             <label for="ocd-ai-language-select" class="ocd-ai-language-label">Language:</label>
@@ -35,7 +51,7 @@ $user_name = $current_user->display_name ?: $current_user->user_login;
         <p>Model Info:
             <strong id="ocd-ai-model-status">
                 <?php
-                echo 'Status: ready | Model ID: ' . esc_html($model_info['model_id']) ;
+                echo 'Status: Using ' . esc_html($model_info['model_type']) . ' model | Model ID: ' . esc_html($model_info['model_id']);
                 ?>
             </strong>
         </p>

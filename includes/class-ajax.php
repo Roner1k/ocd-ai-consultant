@@ -1,6 +1,8 @@
 <?php
 
 namespace Ocd\AiConsultant;
+use Ocd\AiConsultant\OcdLog;
+
 
 defined('ABSPATH') || exit;
 
@@ -29,13 +31,21 @@ class Ajax
 
             global $wpdb;
             $row = $wpdb->get_row($wpdb->prepare(
-                "SELECT last_trained_at FROM {$wpdb->prefix}ocd_ai_models WHERE model_id = %s",
+                "SELECT updated_at, model_type FROM {$wpdb->prefix}ocd_ai_models WHERE model_id = %s",
                 $model_id
             ));
 
+            OcdLog::aiLog('AJAX model check', [
+                'model_id' => $model_id,
+                'status' => $status,
+                'model_type' => $row->model_type ?? '—',
+                'last_update' => $row->updated_at ?? '—',
+            ]);
+
             wp_send_json_success([
                 'status' => $status,
-                'last_trained' => $row->last_trained_at ?? '',
+                'last_trained' => $row->updated_at ?? '',
+                'model_type' => $row->model_type ?? 'unknown',
             ]);
 
         } catch (\Throwable $e) {
@@ -115,9 +125,12 @@ class Ajax
         }
 
         try {
-            OpenAiService::refreshPendingModels();
+            $summary = OpenAiService::refreshPendingModels(['training', 'failed']);
+            OcdLog::aiLog('Manual refreshModels triggered via AJAX', $summary);
+
             wp_send_json_success(['message' => 'Model statuses refreshed']);
         } catch (\Throwable $e) {
+            OcdLog::aiLog('refreshModels error', $e->getMessage());
             wp_send_json_error(['message' => $e->getMessage()]);
         }
     }
