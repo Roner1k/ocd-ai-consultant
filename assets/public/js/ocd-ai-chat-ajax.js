@@ -1,12 +1,20 @@
 var OcdAiChatAjax = (function($) {
     return {
         sendMessage: function(prompt, callback) {
-            $.post(ocdAiChat.ajaxUrl, {
+            const payload = {
                 action: 'ocd_ai_chat_send_message',
                 nonce: ocdAiChat.nonce,
                 prompt: prompt
-            }, function(resp) {
+            };
+
+            console.log('[OCD-AI] Sending message to server:', JSON.stringify(payload, null, 2));
+
+            $.post(ocdAiChat.ajaxUrl, payload, function(resp) {
                 if (resp.success) {
+                    if (resp.data.debug) {
+                        console.log('[OCD-AI] OpenAI Debug Payload:', resp.data.debug);
+                    }
+
                     callback(resp.data.reply);
                 } else {
                     callback('Error: ' + (resp.data.message || 'Unknown error'));
@@ -15,6 +23,7 @@ var OcdAiChatAjax = (function($) {
                 callback('Request failed.');
             });
         },
+
 
         checkModelStatus: function(modelId, callback) {
             $.post(ocdAiChat.ajaxUrl, {

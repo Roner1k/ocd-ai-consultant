@@ -69,6 +69,11 @@ class Ajax
             wp_send_json_error(['message' => 'Empty message']);
         }
 
+        OcdLog::aiLog('[AJAX] sendMessage', [
+            'user_id' => get_current_user_id(),
+            'prompt' => $_POST['prompt'] ?? '(missing)',
+        ]);
+
         try {
             $result = OpenAiService::sendMessage($user_id, $prompt);
 
@@ -78,6 +83,8 @@ class Ajax
 
             wp_send_json_success([
                 'reply' => $result['response'],
+                'debug' => $result['debug'] ?? null,
+
             ]);
         } catch (\Throwable $e) {
             wp_send_json_error(['message' => $e->getMessage()]);
@@ -92,17 +99,22 @@ class Ajax
             wp_send_json_error(['message' => 'Not logged in']);
         }
 
-        $current_user = wp_get_current_user();
-        $user_id = $current_user->ID;
-
+        $user_id = get_current_user_id();
         global $wpdb;
         $table = $wpdb->prefix . 'ocd_ai_user_chat';
 
-        $rows = $wpdb->get_results($wpdb->prepare("SELECT role, message, created_at FROM $table WHERE user_id = %d ORDER BY created_at ASC LIMIT 20", $user_id));
-
-        if (!$rows) {
-            wp_send_json_success(['history' => []]);
-        }
+        // Берем последние 30 сообщений и сортируем по возрастанию ID
+        $rows = $wpdb->get_results($wpdb->prepare(
+            "SELECT role, message, created_at 
+         FROM (
+             SELECT * FROM $table 
+             WHERE user_id = %d 
+             ORDER BY id DESC 
+             LIMIT 30
+         ) AS recent 
+         ORDER BY id ASC",
+            $user_id
+        ));
 
         $history = [];
         foreach ($rows as $row) {
@@ -115,6 +127,7 @@ class Ajax
 
         wp_send_json_success(['history' => $history]);
     }
+
 
     public static function refreshModels()
     {

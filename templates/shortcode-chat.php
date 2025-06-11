@@ -41,7 +41,6 @@ switch ($model_info['status']) {
                 <option value="es">Spanish</option>
                 <option value="uk">Ukrainian</option>
                 <option value="ru">Russian</option>
-                <option value="zh">Chinese</option>
             </select>
         </div>
     </div>
@@ -58,9 +57,15 @@ switch ($model_info['status']) {
     </div>
 
     <!-- История сообщений -->
-    <div id="ocd-ai-chat-history" class="ocd-ai-chat-history">
-        <!-- Chat history appears here -->
+    <div class="ocd-chat-history-container">
+        <div id="ocd-ai-chat-history" class="ocd-ai-chat-history">
+            <!-- Chat history appears here -->
+        </div>
+        <div id="ocd-chat-loader" style="display:none; margin: 10px 0; text-align:center;">
+            <span class="loader-dot">⏳ Thinking...</span>
+        </div>
     </div>
+
 
     <!-- Поле ввода -->
     <div class="ocd-ai-chat-input-area">

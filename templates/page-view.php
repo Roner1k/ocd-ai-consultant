@@ -7,6 +7,7 @@ $tables = [
     'ocd_ai_knowledge_base' => 'Import Data',
     'ocd_ai_user_ai_input' => 'Collected GF Data',
     'ocd_ai_model_training_log' => 'Generate model Log',
+    'ocd_ai_user_chat' => 'User Chat',
 ];
 
 $selected = sanitize_text_field($_GET['table'] ?? 'ocd_ai_models');

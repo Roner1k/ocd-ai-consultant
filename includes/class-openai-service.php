@@ -148,11 +148,24 @@ class OpenAiService
         if (!$model_id) return ['error' => 'Model not available'];
 
         $settings = get_option('ocd_ai_settings', []);
-        $system = trim($settings['openai_system_content'] ?? '');
+        $systemBase = trim($settings['openai_system_content'] ?? '');
 
-        $history = self::getUserMessageHistory($user_id);
+        $language = $_COOKIE['ocd_ai_chat_lang'] ?? 'en';
+        $languageNames = [
+            'en' => 'English',
+            'uk' => 'Ukrainian',
+            'pl' => 'Polish',
+            'fr' => 'French',
+            'it' => 'Italian',
+            'de' => 'German',
+            'es' => 'Spanish',
+            'ru' => 'Russian',
+        ];
+        $langName = $languageNames[$language] ?? 'English';
+
+        $system = $systemBase . "\nAlways reply in {$langName}, unless the user explicitly requests a different language.";
+
         $messages = [];
-
         if ($system) {
             $messages[] = [
                 'role' => 'system',
@@ -160,6 +173,7 @@ class OpenAiService
             ];
         }
 
+        $history = self::getUserMessageHistory($user_id);
         $messages = array_merge($messages, $history, [
             ['role' => 'user', 'content' => $prompt],
         ]);
@@ -174,17 +188,35 @@ class OpenAiService
         self::saveMessageToDb($user_id, 'user', $prompt);
         self::saveMessageToDb($user_id, 'assistant', $reply);
 
-        return ['response' => $reply];
+        return [
+            'response' => $reply,
+            'debug' => [
+                'model' => $model_id,
+                'messages' => $messages,
+            ]
+        ];
     }
 
-    private static function getUserMessageHistory($user_id, $limit = 10)
+
+    private static function getUserMessageHistory($user_id, $limit = 22)
     {
         global $wpdb;
         $table = $wpdb->prefix . 'ocd_ai_user_chat';
 
-        $rows = $wpdb->get_results($wpdb->prepare("SELECT role, message FROM $table WHERE user_id = %d ORDER BY created_at DESC LIMIT %d", $user_id, $limit));
+        $rows = $wpdb->get_results($wpdb->prepare(
+            "SELECT role, message 
+         FROM (
+             SELECT * FROM $table 
+             WHERE user_id = %d 
+             ORDER BY id DESC 
+             LIMIT %d
+         ) AS recent 
+         ORDER BY id ASC",
+            $user_id, $limit
+        ));
+
         $messages = [];
-        foreach (array_reverse($rows) as $row) {
+        foreach ($rows as $row) {
             $messages[] = [
                 'role' => $row->role,
                 'content' => $row->message,
@@ -193,24 +225,26 @@ class OpenAiService
         return $messages;
     }
 
+
     private static function saveMessageToDb($user_id, $role, $message)
     {
         global $wpdb;
+
+        $clean = trim(stripslashes($message));
+        $clean = preg_replace('/\s+/', ' ', $clean);
+
+        $clean = preg_replace('/[^\P{C}\x00-\x7F]+/u', '', $clean);
+
         $wpdb->insert($wpdb->prefix . 'ocd_ai_user_chat', [
             'user_id' => $user_id,
             'role' => $role,
-            'message' => $message,
+            'message' => $clean,
             'created_at' => current_time('mysql'),
         ]);
     }
 
-//    public static function aiLog(string $msg, $ctx = null): void
-//    {
-//        if ($ctx !== null) {
-//            $msg .= ' | ' . substr(json_encode($ctx, JSON_UNESCAPED_UNICODE), 0, 8000);
-//        }
-//        error_log('[AI] ' . $msg);
-//    }
+
+
 
     public static function trainModel(array $dataset): string|false
     {
