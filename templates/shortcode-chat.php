@@ -31,8 +31,8 @@ switch ($model_info['status']) {
 
         </div>
         <div class="ocd-ai-chat-language">
-            <label for="ocd-ai-language-select" class="ocd-ai-language-label">Language:</label>
-            <select name="ocd_ai_language" id="ocd-ai-language-select">
+            <label for="ocd-ai-language-select" class="ocd-ai-language-label">Preferred language:</label>
+            <select name="ocd_ai_language" id="ocd-ai-language-select" class="ocd-ai-language-select-custom">
                 <option value="en">English</option>
                 <option value="fr">French</option>
                 <option value="pl">Polish</option>
@@ -46,7 +46,7 @@ switch ($model_info['status']) {
     </div>
 
     <!-- Subheader для дебага -->
-    <div class="ocd-ai-chat-subheader">
+    <div class="ocd-ai-chat-subheader" style="display:none;">
         <p>Model Info:
             <strong id="ocd-ai-model-status">
                 <?php
@@ -69,8 +69,8 @@ switch ($model_info['status']) {
 
     <!-- Поле ввода -->
     <div class="ocd-ai-chat-input-area">
-        <textarea id="ocd-ai-user-message" placeholder="Type your message..." rows="3"></textarea>
-        <button id="ocd-ai-send-message" type="button">Send</button>
+        <textarea id="ocd-ai-user-message" class="ocd-ai-input-adaptive" placeholder="Type your message..." rows="3"></textarea>
+        <button id="ocd-ai-send-message" class="ocd-ai-btn-adaptive" type="button">Send</button>
     </div>
 
     <!-- Оверлей -->

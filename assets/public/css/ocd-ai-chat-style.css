@@ -21,12 +21,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
+    border-bottom: 2px solid #3dc3b6;
+    padding-bottom: 8px;
 }
 
-#ocd-ai-chat-container .ocd-ai-chat-title h2 {
+#ocd-ai-chat-container .ocd-ai-chat-title h2,
+#ocd-ai-chat-container .ocd-ai-chat-title strong {
     margin: 0;
     font-size: 22px;
+    color: #3dc3b6;
+}
+#ocd-ai-chat-container .ocd-ai-chat-language{
+    display: flex    ;
+        flex-flow: column;
+        align-items: flex-end; 
 }
 
 #ocd-ai-chat-container .ocd-ai-language-select {
@@ -54,19 +63,29 @@
     padding: 10px;
     border-radius: 6px;
     border: 1px solid #ccc;
+    font-size: 1rem;
+    line-height: 1.2;
+    height: 46px;
+    box-sizing: border-box;
 }
 
 #ocd-ai-chat-container #ocd-ai-send-message {
     padding: 10px 20px;
-    background-color: #22c55e;
+    background-color: #3dc3b6;
+    margin:0;
     color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
 }
 
-#ocd-ai-chat-container #ocd-ai-send-message:hover {
-    background-color: #16a34a;
+#ocd-ai-chat-container #ocd-ai-send-message:hover,
+#ocd-ai-chat-container .ocd-ai-btn-adaptive:hover {
+    background-color: #319e93;
 }
 
 #ocd-ai-chat-container .ocd-ai-chat-overlay {
@@ -94,8 +113,8 @@
 }
 
 #ocd-ai-chat-history .user-message {
-    background-color: #dcfce7;
-    border: 1px solid #22c55e;
+    background-color: #e6fcf9;
+    border: 1px solid #3dc3b6;
     border-radius: 12px;
     padding: 10px 14px;
     margin: 10px 0 10px auto;
@@ -158,6 +177,25 @@
     left: 0;
     width: 100%;
     height: 20px;
+}
+
+#ocd-ai-chat-container .ocd-ai-language-select-custom {
+    height: 36px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid #3dc3b6;
+    font-size: 0.98rem;
+    background: #f9fafb;
+    color: #222;
+    margin-left: 8px;
+    transition: border 0.2s;
+        max-width: 168px;
+
+}
+
+#ocd-ai-chat-container .ocd-ai-language-select-custom:focus {
+    border: 1.5px solid #3dc3b6;
+    outline: none;
 }
 
 @keyframes pulse {
