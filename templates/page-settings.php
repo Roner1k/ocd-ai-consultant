@@ -32,7 +32,7 @@ $settings = get_option('ocd_ai_settings', [
                 <td>
         <textarea name="openai_ft_system_content" required  id="openai_ft_system_content" class="large-text"
                   rows="4"><?php echo esc_textarea($settings['openai_ft_system_content'] ?? ''); ?></textarea>
-                    <p class="description">Used during fine-tuning for training the model’s behavior.</p>
+                    <p class="description">Used during fine-tuning for training the model's behavior.</p>
                 </td>
             </tr>
             <tr>
@@ -90,6 +90,14 @@ $settings = get_option('ocd_ai_settings', [
         true
     );
 
+    wp_enqueue_script(
+        'ocd-ai-list',
+        plugin_dir_url(dirname(__FILE__)) . 'assets/admin/js/ocd-ai-list.js',
+        ['jquery'],
+        '1.0.0',
+        true
+    );
+
     wp_localize_script('ocd-ai-refresh', 'ocdAiRefresh', [
         'ajaxUrl' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('ocd_ai_refresh_models'),
@@ -98,29 +106,17 @@ $settings = get_option('ocd_ai_settings', [
 
     <hr>
 
-    <h2>User data collect</h2>
-    <form method="post"
-          onsubmit="return confirm('This will rebuild the entire AI input table from all form entries. Continue?');">
-        <?php wp_nonce_field('ocd_ai_regenerate_inputs', 'ocd_ai_regenerate_inputs_nonce'); ?>
-        <?php submit_button('Regenerate User Inputs', 'primary'); ?>
+    <form id="ocd-ai-list-models-form" method="post" onsubmit="return false;">
+        <?php wp_nonce_field('ocd_ai_chat_nonce', 'ocd_ai_chat_nonce'); ?>
+        <button type="button" class="button secondary" id="ocd-ai-list-models-btn">List Available Models (Log)</button>
     </form>
-
-
-
+    <div id="ocd-ai-list-models-result" style="margin-top:1em;"></div>
 
     <hr>
-
-    <form method="post">
-        <?php wp_nonce_field('ocd_ai_list_models_nonce', 'ocd_ai_list_models_nonce'); ?>
-        <?php submit_button('List Available Models (Log)', 'secondary', 'list_models'); ?>
-    </form>
-    <hr>
-
 
     <form method="post" onsubmit="return confirm('Delete all FT models not listed in your database?');">
         <?php wp_nonce_field('ocd_ai_delete_orphaned_models', 'ocd_ai_delete_orphaned_models_nonce'); ?>
         <?php submit_button('Clean Orphaned FT Models', 'secondary'); ?>
     </form>
-
 
 </div>

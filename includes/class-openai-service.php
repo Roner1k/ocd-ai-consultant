@@ -144,11 +144,27 @@ class OpenAiService
     public static function sendMessage(int $user_id, string $prompt)
     {
         self::init();
+
         $model_id = self::getActiveModelId();
-        if (!$model_id) return ['error' => 'Model not available'];
+        if (!$model_id) {
+            return ['error' => 'No active model available. Please train a model first.'];
+        }
 
         $settings = get_option('ocd_ai_settings', []);
-        $systemBase = trim($settings['openai_system_content'] ?? '');
+        $systemBase = $settings['openai_system_content'] ?? 'You are a helpful assistant.';
+
+        // 1. Загружаем summary_json пользователя
+        global $wpdb;
+        $summary_table = $wpdb->prefix . 'ocd_ai_user_ai_input';
+        $user_summary_json = $wpdb->get_var($wpdb->prepare(
+            "SELECT summary_json FROM $summary_table WHERE user_id = %d",
+            $user_id
+        ));
+
+        // 2. Добавляем summary в системный промпт
+        if ($user_summary_json) {
+            $systemBase .= "\n\nHere is the user's data summary. Use it to personalize your response:\n" . $user_summary_json;
+        }
 
         $language = $_COOKIE['ocd_ai_chat_lang'] ?? 'en';
         $languageNames = [
@@ -508,5 +524,28 @@ class OpenAiService
         }
     }
 
+    /**
+     * Генерирует датасет для обучения на основе базы знаний (ocd_ai_knowledge_base)
+     */
+    public static function buildKbDataset(): array
+    {
+        global $wpdb;
+        $rows = $wpdb->get_results("SELECT col1 AS question, col2 AS answer FROM {$wpdb->prefix}ocd_ai_knowledge_base");
+        $dataset = [];
+        $settings = get_option('ocd_ai_settings', []);
+        $system_prompt = trim($settings['openai_ft_system_content'] ?? '');
+
+        foreach ($rows as $row) {
+            if (!$row->question || !$row->answer) continue;
+            $messages = [];
+            if ($system_prompt) {
+                $messages[] = ['role' => 'system', 'content' => $system_prompt];
+            }
+            $messages[] = ['role' => 'user', 'content' => $row->question];
+            $messages[] = ['role' => 'assistant', 'content' => $row->answer];
+            $dataset[] = ['messages' => $messages];
+        }
+        return $dataset;
+    }
 
 }

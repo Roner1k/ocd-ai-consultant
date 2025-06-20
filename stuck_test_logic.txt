@@ -1,0 +1,643 @@
+STUCK TEST - Compulsion Themes
+
+Stuck Test Logic:
+
+These question tags will create the stuck test results. There can be
+more than one in type within the same question. Example: mental,
+emotional. Therefore, again, we will need to rely on which adds up to
+the highest percentage for the total amount.
+
+Logic Key for stuck test results:
+
+(stuck result tags) within the parentheses. These will help dictate the
+results section of the stuck test.
+
+Compulsive Themes - This will help trigger the compulsive theme to be
+shown in the result section within the compulsion results section. There
+are only three sections of this test that will trigger these results.
+These sections are as follows:
+
+Stuck in mental compulsions section
+
+Stuck in perfectionism section
+
+Stuck in rituals section
+
+Stuck in checking section
+
+Stuck in avoidance section
+
+{types of mental compulsion} This is a type of mental compulsion that I
+would like to be listed in the compulsion section “view all results”
+button. You could just list these under the mental compulsion section of
+the total results breakdown. The only section that will need to show
+these results is from the Stuck in Mental Compulsions section.
+
+Stuck Test Numbers
+
+Mental 69
+
+Physical 55
+
+Emotional 24
+
+Future 8
+
+Past 8
+
+Present 9
+
+Avoidance 38
+
+Checking 39
+
+Reassurance 42
+
+Stuck In The Past
+
+Do you often find yourself stuck in the past? (Past, Mental)
+
+Are you oftentimes reminded about memories from the past where you might
+have done something to feel shame, guilt, embarrassment, or some other
+painful emotion? (Past, Emotional)
+
+Do you often find yourself needing to know the exact specifics about a
+past memory or experience? (Past, Mental)
+
+Do you constantly fear that you might have done something wrong in your
+past? (Past, Mental)
+
+Do you constantly check your memories of the past? Even if it was 5
+minutes ago? (Past, Mental)
+
+Do you find yourself replaying, rewinding, and inspecting memories or
+experiences of the past? (Past, Mental)
+
+Do you find yourself ruminating continuously about the past, past
+memories, or past experiences? (Past, Mental)
+
+Do you feel like you are not present at times because you are mentally
+stuck, worried or fearing the future? (Past, Mental)
+
+Stuck In The Future
+
+Do you continuously find yourself thinking of future based thoughts,
+worries, or fears? (Future, Mental)
+
+Do you often find yourself in a state of worry about the future where
+you feel the need to predict the future and any possible outcomes that
+could come in the future? (Future, Mental)
+
+Do you find yourself always fearing a catastrophic future? (Future,
+Mental)
+
+Do you find yourself needing to know what will happen in the future so
+that you can ensure your worst fears never come true? (Future, Mental)
+
+Do you feel like you are not present at times because you are mentally
+stuck, worried or fearing the future? (Future, Mental)
+
+Do you feel like you are rarely able to be present in the here and now
+because you are constantly stuck in the future in your head? (Future,
+Mental)
+
+Do you fear that past experiences will happen again in the future
+(concern that experiences of the past will happen again in the future)?
+(Future, Mental)
+
+Do you find yourself always trying to answer what if questions in your
+head? Ex. What if I get in a car accident and die? (Future, Mental)
+
+Stuck In The Present
+
+Do you find yourself fearing contamination fears in this moment, do have
+to clean and decontaminate yourself, hands, or house often? (Present,
+Physical)
+
+Do you find yourself needing something to feel right or be just right
+before you move on? (Present, Emotional, Physical)
+
+Do you find yourself needing to feel complete before you move on (going
+from on task to another)? (Present, Emotional, Physical)
+
+Do you find yourself constantly avoiding people, places, objets, or
+experiences? (Present, Physical)
+
+Do you find yourself not wanting to touch something for fears of
+contamination?(Present, Physical)
+
+Do you find yourself needing to avoid things because they “feel gross”?
+(Present, Physical, Emotional)
+
+Do you find yourself needing to count, check, or do a task until a
+certain number in order to be able to move on? (Present, Mental,
+Physical)
+
+Do you have to check door locks, make sure you shut the door, or perform
+some other task in the moment, otherwise you cannot move on? (Present,
+Physical)
+
+Do you avoid certain people for fears that you could become them or take
+on a part of their personality, traits, or identity? (Present, Physical)
+
+Stuck Emotionally / Feeling
+
+Do you feel that if you do not perform a compulsion, you will be stuck
+feeling an emotion other than fear or anxiety? (Emotional)
+
+Do you feel like the emotion is holding you hostage; that if I don’t do
+a certain thing, you are threatened with having that emotion
+permanently? (Emotional)
+
+Do you feel out of control because of emotions triggered by OCD that are
+not anxiety or fear? (Emotional)
+
+Do you continue to feel feelings of guilt, shame, embarrassment, sadness
+or anger until you perform a compulsion? (Emotional)
+
+After performing the compulsion do you feel more guilt, shame,
+embarrassment, sadness or anger because you performed the compulsion?
+(Emotional)
+
+Does it feel like emotions keep you stuck because it’s a never-ending
+loop of feeling that emotion unless you complete the compulsions?
+(Emotional)
+
+Do these emotions feel more intense, less rational, and feel like
+unrealistic guilt, anger, or sadness that are out of your control?
+(Emotional)
+
+Do you find that your OCD triggers tend to create an ongoing experience
+where you are consumed by feelings of guilt? (Emotional)
+
+Do you find that your OCD triggers tend to create an ongoing experience
+where you are consumed by feelings of shame? (Emotional)
+
+Do you find that your OCD triggers tend to create an ongoing experience
+where you are consumed by feelings of sadness? (Emotional)
+
+Do you find that your OCD triggers tend to create an ongoing experience
+where you are consumed by feelings of anger? (Emotional)
+
+Do you find that your OCD triggers tend to create an ongoing experience
+where you are consumed by feelings of regret? (Emotional)
+
+Do you find that your OCD triggers tend to create an ongoing experience
+where you are consumed by feelings of embarrassment? (Emotional)
+
+Do you find that your OCD triggers tend to create an ongoing experience
+where you are consumed by disgust? (Emotional)
+
+Do you feel any feelings of guilt, shame, or regret mean that you must
+have done something wrong with past experiences? (Emotional)
+
+Do you find that your emotions are the reason you feel the need to
+perform compulsions? (Emotional)
+
+Do you feel the need for things in your life to feel right or be just
+right? This can include clothing, checking, leaving a room, getting out
+of or into the car, leaving the house, writing a text, etc. (Emotional)
+
+Do you feel like things feels gross or feel dirty? Do you avoid things
+that feel gross or feel dirty? (Emotional)
+
+Stuck Physically
+
+Do you find yourself constantly cleaning, washing ,or decontaminating
+your hands, or other physical body parts? (Physical, Avoidance)
+
+Do you find yourself constantly needing to decontaminate the house, your
+room, car, or other objects? (Physical, Avoidance)
+
+Do you find yourself physically checking (touching / grabbing / rubbing)
+items a specific amount of times? (Physical, Checking, Reassurance)
+
+Do you find that you need to shower, bathe, brush your teeth, groom, or
+go to the bathroom in a specific way? (Physical, Avoidance, Reassurance)
+
+Do you find yourself constantly needing to change outfits or clothes
+because they don’t feel right or are considered bad luck? (Physical,
+Mental, Emotional, Reassurance)
+
+Do you find yourself constantly needing to rearrange items/ move
+objects, or ensure that an object is symmetrical correct? (Physical,
+Avoidance, Checking, Reassurance)
+
+Do you find yourself getting stuck performing physical tasks that you do
+not want to be doing but feel you have to because of OCD? (Physical,
+Emotional)
+
+Do you find yourself engaging in Trichotillomania (hair pulling), or
+Dermotillomania (skin-picking)? (Physical)
+
+Stuck Mentally (These are also Mental Compulsions)
+
+Do you constantly find yourself ruminating or pondering about your
+obsessional fears and thoughts? (Mental, Reassurance, Checking)
+(Mental - Compulsion Test Results) {Pure Obsessional / Pure O}
+
+Do you find yourself constantly trying to obsessively need to know in
+your life? Do you find yourself needing to remember situations or
+circumstances that happened in the past, if your thoughts are something
+you would want in your life, or if you are capable of performing fearful
+actions? (Mental, Reassurance, Checking) (Mental - Compulsion Test
+Results) {Need to Know}
+
+Do you continuously feel the need to understand what your obsessional
+triggers, thoughts, or fears mean? (Mental, Reassurance, Checking)
+(Mental - Compulsion Test Results) {Need to Understand}
+
+Do you continuously feel the need to solve your obsessional triggers,
+thoughts, or fears? (Mental, Reassurance, Checking) (Mental - Compulsion
+Test Results) {Need to Solve}
+
+Do you continuously feel the need to figure out what your obsessional
+triggers, thoughts, or fears mean? (Mental, Reassurance) (Mental -
+Compulsion Test Results) {Need to Figure Out}
+
+Do you find yourself constantly checking mentally if something is true,
+real, fales, etc? (Mental, Reassurance, Checking) (Mental - Compulsion
+Test Results) {Mental Checking}
+
+Do you constantly find yourself trying to prove that your OCD fears will
+not become true or will never happen and provide reasons for why these
+things will never happen in your life? (Mental, Reassurance) (Mental -
+Compulsion Test Results) {Arguing with OCD / Debating OCD}
+
+Do you find yourself replaying, rewinding, pausing, zooming in and out
+on specific parts of past memories? Do you find yourself replaying
+situations in our mind (Did I touch that? Did I say that? Did I do
+that?) - (Mental, Checking) (Mental - Compulsion Test Results) {Replay /
+Rewind Memories}
+
+Listing reasons why you aren’t the thing OCD is telling you about your
+identity? (Mental, Reassurance) (Mental - Compulsion Test Results)
+{Needing To Prove Your Identity}
+
+Do you find yourself trying hard to suppress your scary intrusive
+thoughts? (Mental, Avoidance) (Mental - Compulsion Test Results)
+{Thought Suppression}
+
+Are you constantly trying to avoid your thoughts? Do you find yourself
+trying to ignore your thoughts? Do you do everything that you can to
+distract yourself from thoughts/ fears? (Mental, Avoidance) (Mental -
+Compulsion Test Results) {Thought Avoidance}
+
+Do you find yourself constantly neutralizing thoughts with a positive
+thought, image, or some other mental form of neutralization? (Mental,
+Avoidance) (Mental - Compulsion Test Results) {Thought Neutralization}
+
+Do you find that you are constantly having to deal with “what if”
+questions and feel the need to answer what if questions? (Mental,
+Checking, Avoidance) (Mental - Compulsion Test Results) {Answering What
+If Questions}
+
+Do you find yourself constantly trying to predict the future out of fear
+of what could happen? (Mental, Checking, Avoidance) (Mental - Compulsion
+Test Results) {Fortune Telling}
+
+Do you find yourself constantly trying to figure out what other people
+are thinking about you when you are with them or during social
+interactions? (Mental, Checking, Avoidance) (Mental - Compulsion Test
+Results) {Mind Reading}
+
+Do you find your OCD is constantly connecting dots that seem unrealistic
+to others? (Mental, Checking, Avoidance) (Mental - Compulsion Test
+Results) {Magical Thinking}
+
+Do you constantly feel the need to provide yourself with reassurance?
+This can be done with online research, asking loved ones and friends if
+you are okay, or some other form of reassurance. (Mental, Checking,
+Avoidance, Reassurance) (Mental - Compulsion Test Results) {Seeking
+Reassurance}
+
+Do you find yourself constantly checking to see what your intentions
+were in the past by replaying memories? (Mental, Checking, Reassurance)
+(Mental - Compulsion Test Results) {Checking Intentions}
+
+Do you find yourself constantly praying in the hopes that your prayers
+will neutralize your negative unwanted thoughts? (Mental, Reassurance)
+(Mental - Compulsion Test Results) {Compulsive Praying}
+
+Playing or ruminating about a future situation in your head that is
+based on a catastrophic fearful outcome. The goal of doing this is to
+try to predict what will happen in the future. (Mental, Reassurance)
+(Mental - Compulsion Test Results) {Fortune Telling}
+
+Trying to figure out or predict what other people are thinking about you
+when you are around them. Thinking that you already know what they are
+thinking or saying about you in their head (Mental, Checking,
+Reassurance) (Mental - Compulsion Test Results) {Mind Reading}
+
+Do you continually utilize your mental energy (thinking/analyzing/brain
+power) to figure out OCD thoughts and fears (obsessions)? Spending lots
+of time and energy ruminating on fears, intrusive thoughts, going
+through a mental checklist in your head, pondering whether or not you
+have done, or are capable of doing something that is polar to who you
+know yourself to be, is illegal, immoral, or some other fearful outcome.
+(Mental, Checking, Reassurance) (Mental - Compulsion Test Results)
+{Rumination}
+
+Stuck in Avoidance
+
+Do you constantly find yourself in a state of avoidance in your life?
+(Avoidance) Avoidance - Compulsive Themes
+
+Do you feel the need to avoid thoughts, people, experiences, or places
+in your life? (Avoidance, Mental, Physical) Avoidance - Compulsive
+Themes
+
+Do you find yourself constantly needing to escape and avoid certain
+people, places, or experiences that will trigger your anxiety, fear, or
+overwhelm? (Avoidance, Physical) Avoidance - Compulsive Themes
+
+Do you constantly find yourself needing to distract yourself away from
+your intrusive thoughts, fears, or obsessions? (Avoidance, Mental)
+Avoidance - Compulsive Themes
+
+Do you find yourself needing to avoid certain numbers, people, or places
+that are considered bad luck or create superstitious fears? (Avoidance)
+Avoidance - Compulsive Themes
+
+Do you need to avoid people, places, or objects that are deemed
+“contaminated”? (Avoidance, Physical, Mental) Avoidance - Compulsive
+Themes
+
+Do you find yourself avoiding certain types of people (LGBTQ,
+right-wingers, rude or mean people, or people that you dislike or do not
+care for)? (Avoidance, Physical, Mental) Avoidance - Compulsive Themes
+
+Do you find yourself continuously avoiding public places that have large
+crowds, are busy, or overwhelming to you? (Ex. Mall, shopping centers,
+grocery stores, etc). (Avoidance, Physical) Avoidance - Compulsive
+Themes
+
+Do you find it easier to just avoid than to face the thing that you are
+avoiding? (Avoidance) Avoidance - Compulsive Themes
+
+Do you wish you could never come into contact with the thing you are
+avoiding? (Avoidance) Avoidance - Compulsive Themes
+
+Do you find yourself avoiding certain social situations? (Ex. public
+speaking, parties, weddings, social gatherings, etc) (Avoidance,
+Physical) Avoidance - Compulsive Themes
+
+Do you avoid other areas of your life as a result of OCD, fears, or
+anxiety? (Avoidance) Avoidance - Compulsive Themes
+
+Stuck in Reassurance
+
+Do you find that you are constantly seeking reassurance? (the need to
+seek outside of yourself to achieve a sense of calm. This can be with
+other people, online research, taking tests, or seeing the doctor)
+(Reassurance) Reassurance - Compulsive Themes
+
+Do you find yourself constantly checking to reassure yourself (this can
+be physical or mental but there is a need to repeatedly check thoughts,
+items, or memories to ensure safety, security, that you did or didn’t do
+something, etc.)? (Reassurance) Reassurance - Compulsive Themes
+
+Do you find yourself constantly needing to tell, confess, or share your
+thoughts, fears, or concerns with someone that you trust? (Reassurance)
+Reassurance - Compulsive Themes
+
+Do you find yourself constantly needing to ask someone that you trust if
+you have done something, did do something, or are capable of doing
+something? (Reassurance) Reassurance - Compulsive Themes
+
+Do you find yourself constantly going online to provide yourself with
+online reassurance? (Ex. Googling your fears and concerns, going to
+WebMD, or some other website to verify that you are okay, not capable of
+doing something or didn’t do something) (Reassurance, Mental)
+Reassurance - Compulsive Themes
+
+Do you find yourself constantly going to your doctor to ensure that you
+do not have a health condition, additional diagnosis, or that some other
+catastrophic fear will not, or has not come true? (Reassurance, Mental,
+Physical) Reassurance - Compulsive Themes
+
+Do you find yourself constantly needing to speak with your trusted
+family member, friend, professional, or significant other about your
+obsessional triggers, or fears? (Reassurance) Reassurance - Compulsive
+Themes
+
+Do you find yourself continually telling yourself that you did not do
+something, will not do something, or are not capable of doing something?
+(Reassurance, Mental) Reassurance - Compulsive Themes
+
+Do you constantly tell yourself things like “that is not true”, “I did
+not do that”, “I am not that”, or “I could never do that”? (Reassurance,
+Mental) Reassurance - Compulsive Themes
+
+Do you perform some other form of reassurance seeking in your life as a
+result of OCD, fears, or anxiety? (Reassurance) Reassurance - Compulsive
+Themes
+
+Stuck in Checking
+
+Do you repeatedly check the stove, locks, garage door, iron, or windows
+prior to leaving or when you come home? (Checking, Mental, Physical)
+Checking - Compulsive Themes
+
+Are you constantly checking if you placed something somewhere?
+(Checking, Mental, Physical) Checking - Compulsive Themes
+
+Are you constantly checking to make sure you didn’t forget anything or
+leave something behind? (Checking, Mental, Physical) Checking -
+Compulsive Themes
+
+Are you constantly checking that you did not or will not harm or hurt
+others? Do you find yourself checking that you did not or will not harm
+yourself? (Checking, Mental) Checking - Compulsive Themes
+
+Are you constantly checking that nothing terrible will happen in the
+future? (Ex. Fortune Telling AKA trying to predict the future)
+(Checking, Mental) Checking - Compulsive Themes
+
+Are you constantly checking that you did not make a mistake, do
+something wrong, or checking some other fear or memory from the past?
+(Checking, Mental) Checking - Compulsive Themes
+
+Do you find yourself physically checking physical sensations in the
+body? Do you feel consumed by consistently monitoring physical
+sensations of the body? (Checking, Physical) Checking - Compulsive
+Themes
+
+Do you find yourself mentally checking things that have happened in your
+past, past experiences, or past memories to ensure that you did not do
+something or could not have done something? (Checking, Mental)
+Checking - Compulsive Themes
+
+Do you find yourself checking to make sure you did the right thing, said
+the right thing, or made the right choice or decision? (Checking,
+Mental) Checking - Compulsive Themes
+
+Do you perform some other form of checking in your life as a result of
+OCD, fears, or anxiety? (Checking) Checking - Compulsive Themes
+
+Stuck in Perfectionism
+
+Do you continuously feel the need to write, text, speak, or act
+perfectly? (Mental, Physical, Checking, Reassurance, Avoidance) -
+Compulsive Themes - Perfectionism
+
+Do you find yourself needing to rewrite emails, texts, or papers over
+and over until you get them perfect? (Mental, Physical, Checking,
+Reassurance, Avoidance) - Compulsive Themes - Perfectionism
+
+Do you find yourself needing to look perfect? (Hair, make up, outfit,
+etc) (Mental, Physical, Checking, Reassurance, Avoidance) - Compulsive
+Themes - Perfectionism
+
+Do you find yourself repeating over and over to achieve perfection in
+some area of your life? (Mental, Physical, Checking, Reassurance,
+Avoidance) - Compulsive Themes - Perfectionism
+
+Do you feel like perfection is the only grade that is worth getting?
+(Mental, Physical, Checking, Reassurance, Avoidance) - Compulsive
+Themes - Perfectionism
+
+Do you find yourself needing to live perfectly? (Mental, Physical,
+Checking, Reassurance, Avoidance) - Compulsive Themes - Perfectionism
+
+Do you find yourself constantly compelled to live as if you are perfect?
+(Mental, Physical, Checking, Reassurance, Avoidance) - Compulsive
+Themes - Perfectionism
+
+Do you feel like perfection is the only appropriate way to live in the
+world? (Mental, Physical, Checking, Reassurance, Avoidance) - Compulsive
+Themes - Perfectionism
+
+Do you find yourself constantly feeling like it is not perfect, you have
+failed? (Mental, Physical, Checking, Reassurance, Avoidance) -
+Compulsive Themes - Perfectionism
+
+Do you feel like if you were to give up achieving perfection you will
+have failed yourself and your life? (Mental, Physical, Checking,
+Reassurance, Avoidance) - Compulsive Themes - Perfectionism
+
+Do you feel like if you do not achieve perfection in some area of your
+life that you have once again not lived up to who and what you could be?
+(Mental, Physical, Checking, Reassurance, Avoidance) - Compulsive
+Themes - Perfectionism
+
+Do you wish that you could achieve perfection in your life? (Mental,
+Physical, Checking, Reassurance, Avoidance) - Compulsive Themes -
+Perfectionism
+
+Do you feel less than if you cannot achieve perfection? (Mental,
+Physical, Checking, Reassurance, Avoidance) - Compulsive Themes -
+Perfectionism
+
+Do you have to be perfect in other areas of your life because of OCD?
+(Mental, Physical, Checking, Reassurance, Avoidance) - Compulsive
+Themes - Perfectionism
+
+Stuck in Rituals
+
+Do you find yourself continuously performing rituals in your life (feel
+you have to do things a certain way repeatedly, that they have to be
+done the exact same way every time or for an exact amount of times each
+time)? (Physical) Rituals - Compulsive Themes
+
+Do you find yourself constantly repeating actions or behaviors to feel
+right, feel set, or feel complete? (Physical) Rituals - Compulsive
+Themes
+
+Are you unable to move on in your life if these rituals are not
+performed a specific way every time? (Physical) Rituals - Compulsive
+Themes
+
+Do you find yourself needing to repeat actions or behaviors repeatedly a
+certain number of times? (Physical) Rituals - Compulsive Themes
+
+Do you feel the need to repeat actions or behaviors repeatedly in order
+to feel complete? (Physical) Rituals - Compulsive Themes
+
+Do you need to do things consistently every time you enter a room, leave
+a room, get up, or down, or some other activity? (Physical) Rituals -
+Compulsive Themes
+
+Do you find yourself struggling to move on if an action or behavior is
+not done in a specific way, every time? (Physical) Rituals - Compulsive
+Themes
+
+Do you need to touch, tap, or rub certain objects in your home, car, or
+at work? (Physical) Rituals - Compulsive Themes
+
+Do you need to blink, stare, or look at an object, person, or place in a
+specific way every time? (Physical) Rituals - Compulsive Themes
+
+Need to eat a specific way, count to a specific number of calories, or
+some other ritualized eating behaviors? (Physical) Rituals - Compulsive
+Themes
+
+Do you find yourself continuously needing to do things in a very
+specific way that most people do not have to do? (Physical) Rituals -
+Compulsive Themes
+
+Do you often feel embarrassed or ashamed of the thought that someone
+would see you doing a ritual or behavior because you know it is not
+“normal”? (Physical) Rituals - Compulsive Themes
+
+Do you perform some other ritual in your life as a result of OCD?
+(Physical) Rituals - Compulsive Themes
+
+Compulsion Test:
+
+After evaluating all of this again, it became clear that there is no
+longer a reason to have them take a compulsion test. With that being
+said, the prior test will provide results for the 25 compulsion themes
+below.
+
+25- Compulsive Themes
+
+Avoidance
+
+Checking
+
+Cleaning / Washing
+
+Counting
+
+Exercise
+
+Existential
+
+Feels Dirty / Feels Gross
+
+Harm
+
+Health
+
+Identity
+
+Just Right / Feels Right
+
+Mental
+
+Morality
+
+Perfectionism
+
+Physical
+
+Reassurance
+
+Relational
+
+Religious
+
+Repeating
+
+Responsibility
+
+Ritual
+
+Somatic
+
+Superstitious
+
+Symmetry / Order / Exactness
+
+Unlawful / Illegal

@@ -113,21 +113,13 @@ class DbManager
         $charset = $wpdb->get_charset_collate();
 
         $sql = "
-    CREATE TABLE IF NOT EXISTS `$table` (
-        id BIGINT UNSIGNED AUTO_INCREMENT,
-        user_id BIGINT UNSIGNED,
-        email VARCHAR(255),
-        question TEXT NOT NULL,
-        answer TEXT NOT NULL,
-        source_form VARCHAR(100),
-        source_entry BIGINT,
-        input_hash VARCHAR(32) NOT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (id),
-        UNIQUE KEY input_hash (input_hash),
-        INDEX (user_id),
-        INDEX (email)
-    ) $charset;";
+CREATE TABLE IF NOT EXISTS `$table` (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT UNSIGNED NOT NULL,
+    summary_json TEXT,
+    last_updated DATETIME,
+    INDEX (user_id)
+) $charset;";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
         dbDelta($sql);

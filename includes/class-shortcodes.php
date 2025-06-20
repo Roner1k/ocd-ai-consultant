@@ -42,6 +42,9 @@ class Shortcodes
             return ob_get_clean();
         }
 
+        // Обновляем summary для текущего пользователя
+        \Ocd\AiConsultant\UserDataBuilder::rebuildForUser($current_user->ID);
+
         $has_active_subscription = true;
 
         $chat_status = 'ready';

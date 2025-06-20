@@ -14,7 +14,8 @@ class Admin
         add_action('admin_menu', [self::class, 'register_admin_pages']);
         add_action('admin_init', [self::class, 'handle_settings_form']);
         add_action('admin_init', [self::class, 'handle_import_form']);
-        add_action('wp_ajax_ocd_ai_refresh_models', [self::class, 'ajax_refresh_models']); // тут self::class будет правильный!
+        add_action('wp_ajax_ocd_ai_refresh_models', [self::class, 'ajax_refresh_models']);
+        add_action('wp_ajax_ocd_ai_list_models', [self::class, 'ajax_list_models']);
 
 
     }
@@ -73,7 +74,7 @@ class Admin
             isset($_POST['ocd_ai_regenerate_nonce']) &&
             wp_verify_nonce($_POST['ocd_ai_regenerate_nonce'], 'ocd_ai_regenerate_models')
         ) {
-            $dataset = UserDataBuilder::buildKbDataset();
+            $dataset = \Ocd\AiConsultant\OpenAiService::buildKbDataset();
             $jsonl = "";
             foreach ($dataset as $item) {
                 $jsonl .= json_encode($item, JSON_UNESCAPED_UNICODE) . "\n";
@@ -93,14 +94,6 @@ class Admin
             } else {
                 add_settings_error('ocd_ai_messages', 'regeneration_failed', 'Failed to start model training.', 'error');
             }
-        }
-
-        if (
-            isset($_POST['ocd_ai_regenerate_inputs_nonce']) &&
-            wp_verify_nonce($_POST['ocd_ai_regenerate_inputs_nonce'], 'ocd_ai_regenerate_inputs')
-        ) {
-            UserDataBuilder::rebuildAll();
-            add_settings_error('ocd_ai_messages', 'inputs_synced', 'All user inputs were rebuilt.', 'updated');
         }
 
         if (
@@ -195,6 +188,20 @@ class Admin
                 . " | running: {$summary['running']}"
                 . " | failed: {$summary['failed']}"
         ]);
+    }
+
+    public static function ajax_list_models()
+    {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'No permission'], 403);
+        }
+        check_ajax_referer('ocd_ai_chat_nonce', 'nonce');
+        try {
+            $models = \Ocd\AiConsultant\OpenAiService::listAvailableModels();
+            wp_send_json_success(['models' => $models]);
+        } catch (\Throwable $e) {
+            wp_send_json_error(['message' => $e->getMessage()]);
+        }
     }
 
 

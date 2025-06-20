@@ -49,6 +49,7 @@ foreach ($includes as $file) {
 register_deactivation_hook(__FILE__, function () {
     // Clear cron job for model training check
     wp_clear_scheduled_hook('ocd_ai_check_training_models');
+    ['Ocd\\AiConsultant\\Cron', 'clearDailyUpdate']();
 });
 
 
@@ -104,6 +105,13 @@ register_activation_hook(__FILE__, function () {
 // Schedule cron if training models exist
     if (class_exists('\Ocd\AiConsultant\Cron')) {
         \Ocd\AiConsultant\Cron::scheduleIfTrainingExists();
+    }
+
+    ['Ocd\\AiConsultant\\Cron', 'scheduleDailyUpdate']();
+
+    // Сразу обновляем summary для всех пользователей
+    if (class_exists('Ocd\\AiConsultant\\UserDataBuilder')) {
+        \Ocd\AiConsultant\UserDataBuilder::rebuildAll();
     }
 
 });
