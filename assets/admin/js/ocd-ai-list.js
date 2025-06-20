@@ -3,7 +3,7 @@ jQuery(function($){
         const $btn = $(this).prop('disabled', true);
         const $result = $('#ocd-ai-list-models-result');
         $result.hide().text('Working...').show();
-        // Получаем nonce из скрытого input формы
+        // Get nonce from hidden input in the form
         var nonce = $('#ocd-ai-list-models-form input[name=ocd_ai_chat_nonce]').val();
         $.post(ocdAiRefresh.ajaxUrl, {
             action: 'ocd_ai_list_models',

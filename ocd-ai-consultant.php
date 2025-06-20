@@ -109,7 +109,7 @@ register_activation_hook(__FILE__, function () {
 
     ['Ocd\\AiConsultant\\Cron', 'scheduleDailyUpdate']();
 
-    // Сразу обновляем summary для всех пользователей
+    // Immediately update summary for all users
     if (class_exists('Ocd\\AiConsultant\\UserDataBuilder')) {
         \Ocd\AiConsultant\UserDataBuilder::rebuildAll();
     }

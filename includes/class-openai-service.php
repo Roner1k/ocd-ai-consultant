@@ -71,7 +71,7 @@ class OpenAiService
 
         $now = current_time('mysql');
 
-        // Найти модель по job_id
+        // Find model by job_id
         $model = $wpdb->get_row($wpdb->prepare(
             "SELECT id FROM {$wpdb->prefix}ocd_ai_models WHERE job_id = %s",
             $job_id
@@ -82,7 +82,7 @@ class OpenAiService
             return;
         }
 
-        // Обновляем модель на готовую, сохраняем job_id для консистентности
+        // Update the model to ready, save job_id for consistency
         $wpdb->update("{$wpdb->prefix}ocd_ai_models", [
             'model_id'   => $final_model_id,
             'job_id'     => $job_id,
@@ -93,7 +93,7 @@ class OpenAiService
 
         OcdLog::aiLog("Model marked as active", $final_model_id);
 
-        // Найти предыдущую active модель (если есть)
+        // Find previous active model (if any)
         $prev_active = $wpdb->get_row("SELECT id, model_id FROM {$wpdb->prefix}ocd_ai_models WHERE model_type = 'active' AND model_id != '" . esc_sql($final_model_id) . "' ORDER BY updated_at DESC LIMIT 1");
 
         if ($prev_active) {
@@ -105,7 +105,7 @@ class OpenAiService
             OcdLog::aiLog("Previous active model → backup", $prev_active->model_id);
         }
 
-        // Архивируем все остальные
+        // Archive all others
         $keep_ids = $wpdb->get_col("SELECT id FROM {$wpdb->prefix}ocd_ai_models WHERE model_type IN ('active', 'backup')");
 
         if (!empty($keep_ids)) {
@@ -153,7 +153,7 @@ class OpenAiService
         $settings = get_option('ocd_ai_settings', []);
         $systemBase = $settings['openai_system_content'] ?? 'You are a helpful assistant.';
 
-        // 1. Загружаем summary_json пользователя
+        // 1. Load user's summary_json
         global $wpdb;
         $summary_table = $wpdb->prefix . 'ocd_ai_user_ai_input';
         $user_summary_json = $wpdb->get_var($wpdb->prepare(
@@ -161,7 +161,7 @@ class OpenAiService
             $user_id
         ));
 
-        // 2. Добавляем summary в системный промпт
+        // 2. Add summary to system prompt
         if ($user_summary_json) {
             $systemBase .= "\n\nHere is the user's data summary. Use it to personalize your response:\n" . $user_summary_json;
         }
@@ -335,12 +335,12 @@ class OpenAiService
                 'error' => $error,
             ]);
 
-            // Обновления статуса в БД, как раньше...
+            // DB status updates, as before...
 
             $normalized_status = match ($status) {
                 'succeeded' => 'ready',
                 'running', 'queued' => 'training',
-                default => $status,  // сохраняем оригинал
+                default => $status,  // keep original
             };
 
             return [
@@ -348,7 +348,7 @@ class OpenAiService
                 'fine_tuned_model' => $fine_tuned_model,
                 'error' => $error,
                 'job_id' => $job_id,
-                'raw_status' => $status, // если нужно
+                'raw_status' => $status, // if needed
             ];
 
         } catch (\Throwable $e) {
@@ -451,7 +451,7 @@ class OpenAiService
         ], JSON_UNESCAPED_UNICODE);
         update_option('ocd_ai_settings', $settings);
 
-        // ✅ Ключевой момент — перезапланировать крон, если остались training
+        // ✅ Key point — reschedule cron if there are still training
         Cron::scheduleIfTrainingExists();
 
         return $summary;
@@ -466,11 +466,11 @@ class OpenAiService
             $response = self::$client->models()->list();
             $all = $response->data ?? [];
 
-            // Логируем полный список моделей (в том числе базовые)
+            // Log the full list of models (including base ones)
             $all_ids = array_map(fn($m) => $m->id, $all);
             OcdLog::aiLog("All OpenAI models fetched", $all_ids);
 
-            // Отбираем только кастомные (ft:)
+            // Select only custom (ft:)
             $fine_tuned = array_filter($all, fn($m) => str_starts_with($m->id, 'ft:'));
 
             $result = [];
@@ -525,7 +525,7 @@ class OpenAiService
     }
 
     /**
-     * Генерирует датасет для обучения на основе базы знаний (ocd_ai_knowledge_base)
+     * Generates dataset for training based on knowledge base (ocd_ai_knowledge_base)
      */
     public static function buildKbDataset(): array
     {

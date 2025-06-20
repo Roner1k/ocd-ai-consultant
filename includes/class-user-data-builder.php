@@ -7,7 +7,7 @@ defined('ABSPATH') || exit;
 class UserDataBuilder
 {
     /**
-     * Собирает summary по всем пользователям и сохраняет в таблицу
+     * Collects summary for all users and saves it to the table
      */
     public static function rebuildAll()
     {
@@ -18,13 +18,13 @@ class UserDataBuilder
     }
 
     /**
-     * Собирает summary для одного пользователя и сохраняет в таблицу
+     * Collects summary for a single user and saves it to the table
      */
     public static function rebuildForUser($user_id)
     {
         $summary = self::buildUserSummary($user_id);
         self::saveUserSummary($user_id, $summary);
-        // Логирование
+        // Logging
         $method = (function_exists('wp_doing_cron') && wp_doing_cron()) ? 'cron' : 'manual';
         \Ocd\AiConsultant\OcdLog::aiLog('User summary updated', [
             'time' => current_time('mysql'),
@@ -34,7 +34,7 @@ class UserDataBuilder
     }
 
     /**
-     * Синхронизирует summary для пользователя (например, после заполнения формы)
+     * Synchronizes summary for a user (e.g., after form submission)
      */
     public static function syncUserData($user_id)
     {
@@ -43,7 +43,7 @@ class UserDataBuilder
     }
 
     /**
-     * Формирует агрегированную сводку по результатам тестов из user_meta
+     * Builds an aggregated summary based on test results from user_meta
      */
     private static function buildUserSummary($user_id)
     {
@@ -53,13 +53,13 @@ class UserDataBuilder
             'tests' => []
         ];
 
-        // Проверка: установлен ли ocd-portal (по функции или классу)
+        // Check: is ocd-portal installed (by function or class)
         if (!function_exists('get_user_meta')) {
             $summary['error'] = 'ocd-portal or WordPress usermeta functions not available';
             return $summary;
         }
 
-        // 1. Агрегированные данные по компульсиям
+        // 1. Aggregated data on compulsions
         $compulsion_data = get_user_meta($user_id, 'results_test_ocd_compulsion_results', true);
         if (!empty($compulsion_data['compulsion_results']['compulsion_themes']) && is_array($compulsion_data['compulsion_results']['compulsion_themes'])) {
             $themes = $compulsion_data['compulsion_results']['compulsion_themes'];
@@ -74,7 +74,7 @@ class UserDataBuilder
             $summary['compulsion_summary'] = array_slice($top_themes, 0, 5);
         }
 
-        // 2. Данные по отдельным тестам с новой, чистой структурой
+        // 2. Data for individual tests with new, clean structure
         $test_ids = [3, 4, 5, 6, 98]; 
         foreach ($test_ids as $test_id) {
             $meta_key = 'results_test_ocd_' . $test_id;
@@ -128,7 +128,7 @@ class UserDataBuilder
                     if (!empty($ocd_types)) {
                         usort($ocd_types, fn($a, $b) => ($b['ocd_type_percents'] ?? 0) <=> ($a['ocd_type_percents'] ?? 0));
                         $top_types_full = array_slice(array_filter($ocd_types, fn($t) => !empty($t['ocd_type_percents'])), 0, 3);
-                        // Формируем новый массив с нужными ключами
+                        // Build a new array with required keys
                         $test_summary['top_ocd_types'] = array_map(fn($t) => [
                             'type' => $t['ocd_question'] ?? 'Unknown Type',
                             'score' => $t['ocd_type_percents']
@@ -141,10 +141,10 @@ class UserDataBuilder
                 case 6: // Stuck Test
                     $stuck_result = $test_data['stuck_result'] ?? null;
                     if ($stuck_result && is_array($stuck_result)) {
-                        arsort($stuck_result); // Сортируем массив по убыванию, сохраняя ключи
+                        arsort($stuck_result); // Sort the array in descending order, preserving keys
                         $top_themes = array_slice($stuck_result, 0, 3, true);
                         $test_summary['dominant_stuck_theme'] = ['theme' => key($top_themes), 'score' => current($top_themes)];
-                        array_shift($top_themes); // убираем доминантную, чтобы не дублировать
+                        array_shift($top_themes); // remove the dominant one to avoid duplication
                         $test_summary['other_top_themes'] = array_map(fn($k, $v) => ['theme' => $k, 'score' => $v], array_keys($top_themes), array_values($top_themes));
                         $has_data = true;
                     }
@@ -169,7 +169,7 @@ class UserDataBuilder
     }
 
     /**
-     * Сохраняет summary в таблицу ocd_ai_user_ai_input
+     * Saves summary to the ocd_ai_user_ai_input table
      */
     private static function saveUserSummary($user_id, $summary)
     {
@@ -177,7 +177,7 @@ class UserDataBuilder
         $table = $wpdb->prefix . 'ocd_ai_user_ai_input';
         $json = wp_json_encode($summary, JSON_UNESCAPED_UNICODE);
         $now = current_time('mysql');
-        // Проверяем, есть ли уже запись для этого пользователя
+        // Check if there is already a record for this user
         $exists = $wpdb->get_var($wpdb->prepare("SELECT id FROM $table WHERE user_id = %d", $user_id));
         if ($exists) {
             $wpdb->update($table, [
