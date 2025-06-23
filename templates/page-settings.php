@@ -104,19 +104,26 @@ $settings = get_option('ocd_ai_settings', [
     ]);
     ?>
 
-    <hr>
+    
 
-    <form id="ocd-ai-list-models-form" method="post" onsubmit="return false;">
-        <?php wp_nonce_field('ocd_ai_chat_nonce', 'ocd_ai_chat_nonce'); ?>
-        <button type="button" class="button secondary" id="ocd-ai-list-models-btn">List Available Models (Log)</button>
-    </form>
-    <div id="ocd-ai-list-models-result" style="margin-top:1em;"></div>
-
-    <hr>
-
-    <form method="post" onsubmit="return confirm('Delete all FT models not listed in your database?');">
-        <?php wp_nonce_field('ocd_ai_delete_orphaned_models', 'ocd_ai_delete_orphaned_models_nonce'); ?>
-        <?php submit_button('Clean Orphaned FT Models', 'secondary'); ?>
-    </form>
+    <!-- Model Management Section -->
+    <div >
+        <h3 style="margin-top:1.5rem;">Model Management</h3>
+        <div style="margin-bottom:18px;">
+            <form id="ocd-ai-list-models-form" method="post" onsubmit="return false;" style="display:inline;">
+                <?php wp_nonce_field('ocd_ai_chat_nonce', 'ocd_ai_chat_nonce'); ?>
+                <button type="button" class="button secondary" id="ocd-ai-list-models-btn">List Available Models (Log)</button>
+            </form>
+            <span style="display:block; margin:6px 0 0 0; color:#555; font-size:0.97em;">Show a log of all available AI models and their statuses.</span>
+        </div>
+        <div id="ocd-ai-list-models-result" style="margin-top:1em;"></div>
+        <div style="margin-bottom:10px;">
+            <form method="post" onsubmit="return confirm('Delete all FT models not listed in your database?');" style="display:inline;">
+                <?php wp_nonce_field('ocd_ai_delete_orphaned_models', 'ocd_ai_delete_orphaned_models_nonce'); ?>
+                <?php submit_button('Clean Orphaned FT Models', 'secondary'); ?>
+            </form>
+            <span style="display:block; margin:6px 0 0 0; color:#555; font-size:0.97em;">Remove fine-tuned models that are no longer referenced in your database.</span>
+        </div>
+    </div>
 
 </div>

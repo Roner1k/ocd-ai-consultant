@@ -1,4 +1,3 @@
-
 jQuery(function ($) {
     var $container = $('#ocd-ai-chat-container');
     var $history = $container.find('#ocd-ai-chat-history');
@@ -78,6 +77,12 @@ jQuery(function ($) {
         setChatLanguageCookie(newLang);
         chatLanguage = newLang;
         console.log('Language set to ' + newLang + ' and saved in cookie.');
+
+        // Если история пуста или содержит только приветствие — обновить приветствие
+        var $messages = $history.children();
+        if ($messages.length === 1 && $messages.first().hasClass('assistant-message')) {
+            $messages.first().find('div').last().text(defaultGreetings[newLang] || defaultGreetings['en']);
+        }
     });
 
     $sendBtn.on('click', function () {
